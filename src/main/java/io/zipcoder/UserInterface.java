@@ -1,4 +1,4 @@
-package io.zipcoder.Games;
+package io.zipcoder;
 
 import java.util.Scanner;
 

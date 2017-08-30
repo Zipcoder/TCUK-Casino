@@ -25,13 +25,12 @@ public class Card implements Comparable<Card> {
 	@Override
 	public String toString() {
 		return this.value + " of " + this.suit;
+		// We need to elaborate on this so that we don't have Spade of Ace etc
 	}
 	
 	public int compareTo(Card card){
 		int result = value.compareTo(card.value);
-		
 		return result;
-		
 	}
 	
 }

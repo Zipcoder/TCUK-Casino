@@ -10,12 +10,12 @@ import io.zipcoder.Handlers.Handler;
  * @author F628559
  *
  */
-public class HigherLowerDiceGame extends DiceGame implements Bettable {
+public class HighLowDiceGame extends DiceGame implements Bettable {
 
 	private int numberOfDiceToPlayWith;
 	private Handler handler;
 	
-	public HigherLowerDiceGame(){
+	public HighLowDiceGame(){
 		
 	}
 	

@@ -36,4 +36,15 @@ public class HandTest {
 
         Assert.assertTrue(condition);
     }
+
+    @Test
+    public void clearHandTest(){
+        int expected = 0;
+
+        hand.clearHand();
+
+        int actual = hand.getNumberOfCards();
+
+        Assert.assertEquals(expected, actual);
+    }
 }

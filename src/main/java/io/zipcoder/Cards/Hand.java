@@ -41,4 +41,9 @@ public class Hand {
         }
         return false;
     }
+
+    public void clearHand(){
+        hand = new ArrayList<Card>();
+        numberOfCards = 0;
+    }
 }

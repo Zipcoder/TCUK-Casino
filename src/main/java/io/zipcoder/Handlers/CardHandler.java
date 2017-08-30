@@ -1,9 +1,12 @@
 package io.zipcoder.Handlers;
 
-public class CardHandler {
+import io.zipcoder.CardDealer;
+import io.zipcoder.Cards.Hand;
 
-	public CardHandler() {
-		// TODO Auto-generated constructor stub
-	}
+public abstract class CardHandler extends Handler {
+
+	protected Hand hand;
+	private CardDealer cardDealer;
+
 
 }

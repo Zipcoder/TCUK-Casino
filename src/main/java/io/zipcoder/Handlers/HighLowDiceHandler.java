@@ -33,16 +33,25 @@ public class HighLowDiceHandler extends DiceHandler {
 		return numberOfDice;
 	}
 	 
-	public void giveMoney(Player player, double amountToAdd) {
-	
+	public boolean giveMoney(double amountToAdd) {
 		
+		if (amountToAdd >= 0){
+			player.increaseBalance(amountToAdd);
+			return true;
+		}
+		return false;	
 	}
 
-	public double takeMoney(Player player, double amountToRemove) {
-
-		//check available funds first is > 0 - getBalance method on player
+	public boolean takeMoney(double amountToRemove) {
 		
-		return 0.0;
+		boolean check = this.player.checkBet(amountToRemove);
+		
+		if (check == true){
+			player.reduceBalance(amountToRemove);
+			return true;
+		}
+		//check available funds first is > 0 - getBalance method on player	
+		return false;
 	}
 	
 	

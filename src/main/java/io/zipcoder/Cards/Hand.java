@@ -19,7 +19,7 @@ public class Hand {
         return numberOfCards;
     }
 
-    public boolean addCard(Card card){
+	public boolean addCard(Card card){
         if (card != null && !containsCard(card)){
             hand.add(card);
             numberOfCards++;

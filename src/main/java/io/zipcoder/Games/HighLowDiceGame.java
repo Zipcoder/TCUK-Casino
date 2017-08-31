@@ -187,7 +187,7 @@ public class HighLowDiceGame extends DiceGame {
 	}
 
 	/**
-	 * Quick and easy method to check that an inputted string contains a sub
+	 * Quick and easy method to check that an inputed string contains a sub
 	 * string. Returns true if it does, false if it doesn't
 	 * 
 	 * @param inputString

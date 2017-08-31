@@ -17,6 +17,7 @@ public class HighLowCardGame {
     static CardDealer dealer;
 
     static {
+        values = new HashMap<Value, Integer>();
         values.put(Value.ACE, 1);
         values.put(Value.TWO, 2);
         values.put(Value.THREE, 3);
@@ -52,12 +53,10 @@ public class HighLowCardGame {
         Card cardHidden = dealer.deal();
 
         System.out.println("The first card is: " + cardRevealed + ".\nPlease guess Higher or Lower.");
-        String input = null;
-
-        do {
-            input = UserInterface.getUserInputString();
-        } while (!input.equalsIgnoreCase("Higher") || !input.equalsIgnoreCase("Lower")){
+        String input = UserInterface.getUserInputString();
+        while ((!input.equalsIgnoreCase("Higher")) || (!input.equalsIgnoreCase("Lower"))){
             System.out.println("That is not a valid input. Please type Higher or Lower");
+            input = UserInterface.getUserInputString();
         }
 
         System.out.println("The second card is: " + cardHidden + ".");

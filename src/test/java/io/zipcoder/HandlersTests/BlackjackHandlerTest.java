@@ -23,7 +23,9 @@ public class BlackjackHandlerTest {
     public void hitSuccessTest(){
         double expected = 750.0;
 
-        double actual = handler.hitSuccess();
+        handler.hitSuccess();
+
+        double actual = handler.getPlayer().getBalance();
 
         Assert.assertEquals(expected, actual, 0.0);
     }
@@ -32,7 +34,9 @@ public class BlackjackHandlerTest {
     public void hitFailTest(){
         double expected = 250.0;
 
-        double actual = handler.hitFail();
+        handler.hitFail();
+
+        double actual = handler.getPlayer().getBalance();
 
         Assert.assertEquals(expected, actual, 0.0);
     }

@@ -11,7 +11,7 @@ public interface Bettable {
 	 *            the amount of money to add to the player
 	 * @return player with more money
 	 */
-	public Player giveMoney(Player player, double amountToAdd);
+	boolean increaseBalance(double amountToAdd);
 
 	/**
 	 * take the specified amount of money from the inputed player
@@ -22,6 +22,6 @@ public interface Bettable {
 	 *            the amount of money to add to the player
 	 * @return player with less money
 	 */
-	public Player takeMoney(Player player, double amountToRemove);
+	boolean reduceBalance(double amountToRemove);
 
 }

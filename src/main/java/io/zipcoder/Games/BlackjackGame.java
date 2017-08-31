@@ -1,10 +1,12 @@
 package io.zipcoder.Games;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import io.zipcoder.Bettable;
 import io.zipcoder.CardDealer;
 import io.zipcoder.Player;
+import io.zipcoder.Cards.Card;
 import io.zipcoder.Cards.Hand;
 import io.zipcoder.Cards.Value;
 import io.zipcoder.Handlers.BlackjackHandler;
@@ -12,8 +14,8 @@ import io.zipcoder.Handlers.BlackjackHandler;
 public class BlackjackGame extends CardGame {
 	
 	private HashMap<Value, Integer> valueMap;
-	private BlackjackHandler blackjackHandler;
-	private CardDealer cardDealer;
+//	private BlackjackHandler blackjackHandler;
+	private static CardDealer cardDealer;
 	
 	public BlackjackGame(){
 		super();
@@ -31,11 +33,11 @@ public class BlackjackGame extends CardGame {
 		valueMap.put(Value.QUEEN, 10);
 		valueMap.put(Value.KING, 10);
 		valueMap.put(Value.ACE, 11);
-		this.blackjackHandler = new BlackjackHandler();
+//		this.blackjackHandler = new BlackjackHandler();
 		this.cardDealer = new CardDealer();	
 	}
 	
-	public int computeHandValue(Hand hand){
+	public static int computeHandValue(Hand hand){
 		int sumValue = 0;
 		for(int i = 0; i < hand.getNumberOfCards(); i++){
 			int cardValue = valueMap.get(hand.getHand().get(i).getValue());
@@ -54,6 +56,33 @@ public class BlackjackGame extends CardGame {
 			return 0;
 		}
 	
+	}
+	
+	public static void playGame(){
+		BlackjackHandler blackjackHandler = new BlackjackHandler();
+		
+		// Deal Two Cards To The Dealer
+		cardDealer.dealToDealer(2);
+		
+		// Dealer Deal Two Cards To The Player Hand
+		blackjackHandler.getHand().addCard(cardDealer.deal());
+		blackjackHandler.getHand().addCard(cardDealer.deal());
+		
+		// Compute Dealer Hand Value
+		int dealerHandValue = computeHandValue(cardDealer.getHand());
+		
+		// Compute Player Hand Value
+		int playerHandValue = computeHandValue(blackjackHandler.getHand());
+		
+		if(playerHandValue == 21 && dealerHandValue == 21){
+			System.out.println("This is a tie.");
+			return;
+		}
+		
+		if(playerHandValue == 21 && dealerHandValue != 21){
+			System.out.println("BlackJack! You Win!!!");
+			return;
+		}
 	}
 	
 	

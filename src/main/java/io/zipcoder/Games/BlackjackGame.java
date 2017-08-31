@@ -119,7 +119,14 @@ public class BlackjackGame extends CardGame {
 			return;
 		}
 		
-		// Player Decision(handValue < 21)
+		if(playerHandValue != 21 && dealerHandValue == 21){
+			System.out.println("Dealer BlackJack! You Lose. Game Over.");
+			blackjackHandler.hitFail();;
+			System.out.println(player.getName() + ": " + player.getBalance() + ". Try Again! You Will Win Next Time!");
+			return;
+		}
+		
+		// Player Decision(handValue < 21) --- tow ACE switch value!!!
 		while(true){
 			System.out.println("Do you want to hit? Please answer Y/N");
 			String userDecision = UserInterface.getUserInputString();
@@ -158,7 +165,7 @@ public class BlackjackGame extends CardGame {
 				blackjackHandler.hitFail();
 				System.out.println(player.getName() + ": " + player.getBalance() + ". Try Again! You Will Win Next Time!");
 				return;
-			} else if(computeHandValue(cardDealer.getHand()) == computeHandValue(blackjackHandler.getHand())){
+			} else if(computeHandValue(cardDealer.getHand()) == computeHandValue(blackjackHandler.getHand()) && computeHandValue(cardDealer.getHand()) >= 17){
 				System.out.println("Dealer's Cards:");
 				showHand(cardDealer.getHand());
 				System.out.println("Player's Cards:");

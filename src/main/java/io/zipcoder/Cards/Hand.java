@@ -33,6 +33,10 @@ public class Hand {
         }
     }
 
+    public List<Card> getHand(){
+        return hand;
+    }
+
     private boolean containsCard(Card input){
         for (Card card : hand){
             if (card.getSuit().equals(input.getSuit()) && card.getValue().equals(input.getValue())){

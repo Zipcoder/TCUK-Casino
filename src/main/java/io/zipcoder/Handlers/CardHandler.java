@@ -17,5 +17,14 @@ public abstract class CardHandler extends Handler {
 	
 	
 
+	public Hand getHand() {
+		return hand;
+	}
+	public void setHand(Hand hand) {
+		this.hand = hand;
+	}
+
+
+
 
 }

@@ -1,6 +1,7 @@
 package io.zipcoder.Handlers;
 
-public class BlackjackHandler {
+import io.zipcoder.Bettable;
 
+public class BlackjackHandler extends CardHandler implements Bettable {
 
 }

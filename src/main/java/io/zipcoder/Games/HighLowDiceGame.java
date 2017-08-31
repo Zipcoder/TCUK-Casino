@@ -14,24 +14,30 @@ import io.zipcoder.Handlers.HighLowDiceHandler;
  */
 public class HighLowDiceGame extends DiceGame {
 
-	public void playGame() {
-		// TODO Auto-generated method stub
+	private Player player;
 
+	public HighLowDiceGame(Player player) {
+		this.player = player;
+	}
+
+	@Override
+	public void playGame(Player player) {
+		this.player = player;
+		HighLowDiceGame.playGameStatic(player);
 	}
 
 	/*
 	 * *************************************************************************
-	 * This class was written as a static class before it was appa
+	 * This class was written as a static class as the method does not require
+	 * state, hence why all internal methods are static
 	 * *************************************************************************
-	 * 
 	 */
 
 	private static int numberOfDiceToPlayWith;
 	private static HighLowDiceHandler diceHandler;
 	private static int bettingPool = 0;
 
-	// @Override
-	public static void playGame(Player player) {
+	public static void playGameStatic(Player player) {
 
 		boolean continueGame = true;
 		diceHandler = new HighLowDiceHandler(player);
@@ -57,16 +63,22 @@ public class HighLowDiceGame extends DiceGame {
 			// check and get the user input
 			boolean receivedInvalidInput = true;
 			int bettableAmount;
-			String userInput;
+			String userInput = null;
 
 			while (receivedInvalidInput) {
+				
 				userInput = UserInterface.getUserInputString();
+				
 				if (checkIfInputHas(userInput, "higher") || checkIfInputHas(userInput, "lower")) {
-
 					bettableAmount = getBetAmount();
-					bettingPool += diceHandler.takeMoney(bettableAmount);
-					receivedInvalidInput = false;
+					if (diceHandler.takeMoney(bettableAmount)) {
+						bettingPool += bettableAmount;
+						receivedInvalidInput = false;
+					} else {
+						System.out.println("Sorry, I didn't understand that, can you say if the next dice will be higher or lower?");
+					}
 				}
+				
 			}
 
 			// if the next roll is what they bet (if they bet high and it is
@@ -158,6 +170,12 @@ public class HighLowDiceGame extends DiceGame {
 		return betAmount;
 	}
 
+	/**
+	 * 
+	 * 
+	 * @param betAmount
+	 * @return
+	 */
 	public static boolean checkBetAmount(int betAmount) {
 		boolean condition;
 		if (diceHandler.getPlayer().checkBet(betAmount)) {

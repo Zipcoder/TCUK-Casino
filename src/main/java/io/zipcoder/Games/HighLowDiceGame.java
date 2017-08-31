@@ -4,7 +4,7 @@
 package io.zipcoder.Games;
 import io.zipcoder.Bettable;
 import io.zipcoder.Player;
-import io.zipcoder.Handlers.Handler;
+import io.zipcoder.Handlers.DiceHandler;
 
 /**
  * @author F628559
@@ -13,7 +13,7 @@ import io.zipcoder.Handlers.Handler;
 public class HighLowDiceGame extends DiceGame implements Bettable {
 
 	private int numberOfDiceToPlayWith;
-	private Handler handler;
+	private DiceHandler diceHandler;
 	
 	public HighLowDiceGame(){
 		

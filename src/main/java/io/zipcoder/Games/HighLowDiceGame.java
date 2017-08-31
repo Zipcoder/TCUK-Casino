@@ -158,7 +158,7 @@ public class HighLowDiceGame extends DiceGame {
 		return betAmount;
 	}
 
-	private static boolean checkBetAmount(int betAmount) {
+	public static boolean checkBetAmount(int betAmount) {
 		boolean condition;
 		if (diceHandler.getPlayer().checkBet(betAmount)) {
 			System.out.println("You cannot bet that! Please enter a valid bet:");

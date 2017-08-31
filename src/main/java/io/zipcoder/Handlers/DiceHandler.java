@@ -1,6 +1,9 @@
 package io.zipcoder.Handlers;
 
-public abstract class DiceHandler {
+import io.zipcoder.Player;
+
+public abstract class DiceHandler extends Handler {
+	
 
 
 

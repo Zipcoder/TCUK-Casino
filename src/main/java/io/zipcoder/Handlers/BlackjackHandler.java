@@ -6,18 +6,18 @@ import io.zipcoder.Player;
 public class BlackjackHandler extends CardHandler {
     private double pot;
     private double stake;
-    private Player player;
+    //private Player player;
 
     public BlackjackHandler(Player player){
-    	super();
-        this.player = player;
+    	super(player);
+        //this.player = player;
         pot = 0;
         stake = 0;
     }
 
-    public Player getPlayer(){
-        return player;
-    }
+//    public Player getPlayer(){
+//        return player;
+//    }
 
     public void hitSuccess(){
         player.increaseBalance(pot);

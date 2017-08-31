@@ -115,8 +115,20 @@ public class HighLowDiceGame extends DiceGame {
 
 			bettingPool = 0;
 			System.out.println("\nDo you want to continue the game?");
-			// get user input as boolean value
-
+			boolean continueCondition = true;
+			while (continueCondition) {
+				userInput = UserInterface.getUserInputString();
+				if ((checkIfInputHas(userInput, "y")) || (checkIfInputHas(userInput, "yes"))) {
+					System.out.println("See you next time at higher or lower dice game!");
+					continueCondition = false;
+					continueGame = false;
+				} else if ((checkIfInputHas(userInput, "n")) || (checkIfInputHas(userInput, "no"))) {
+					System.out.println("Let's go again!");
+					continueCondition = false;
+				} else {
+					System.out.println("Sorry, could you repeat that? (yes/no)");
+				}
+			}
 		}
 
 		return;

@@ -65,10 +65,16 @@ public class BlackjackGame extends CardGame {
 		System.out.println(output);
 	}
 	
-	public static void playGame(Player player){
+	// Hit A Card
+	public static void hit(Hand hand){
+		hand.addCard(cardDealer.deal());
+	}
+	
+	public void playGame(Player player){
 		BlackjackHandler blackjackHandler = new BlackjackHandler(player);
 		
 		// Ask For The Amount Of Stake
+		System.out.println("How much would you like to bet?");
 		double amount = UserInterface.getUserInputDouble();
 		
 		// Bet At The Beginning Of The Game
@@ -108,19 +114,55 @@ public class BlackjackGame extends CardGame {
 		}
 		
 		// Player Decision(handValue < 21)
-		System.out.println("Do you want to hit? Please answer Y/N");
-		String userDecision = UserInterface.getUserInputString();
-		if(userDecision.equalsIgnoreCase("Y")){
-			
-		}else if(userDecision.equalsIgnoreCase("N")){
-			
-		}else{
-			System.out.println();
+		while(true){
+			System.out.println("Do you want to hit? Please answer Y/N");
+			String userDecision = UserInterface.getUserInputString();
+			if(userDecision.equalsIgnoreCase("Y")){
+				hit(blackjackHandler.getHand());
+				System.out.println("Dealer's Cards:");
+				showHand(cardDealer.getHand());
+				System.out.println("Player's Cards:");
+				showHand(blackjackHandler.getHand());
+				continue;
+			}else if(userDecision.equalsIgnoreCase("N")){
+				break;
+			}else{
+				System.out.println("Please choose from Y and N");
+			}
 		}
 		
+		// Dealer's Action
+		while(true){
+			if(computeHandValue(cardDealer.getHand()) > computeHandValue(blackjackHandler.getHand())){
+				System.out.println("Dealer's Cards:");
+				showHand(cardDealer.getHand());
+				System.out.println("Player's Cards:");
+				showHand(blackjackHandler.getHand());
+				System.out.println("You Lose. Game Over.");
+				blackjackHandler.hitFail();
+				return;
+			} else if(computeHandValue(cardDealer.getHand()) == computeHandValue(blackjackHandler.getHand())){
+				System.out.println("Dealer's Cards:");
+				showHand(cardDealer.getHand());
+				System.out.println("Player's Cards:");
+				showHand(blackjackHandler.getHand());
+				System.out.println("This is a tie. Game Over.");
+				return;
+			} else if(computeHandValue(cardDealer.getHand()) < 17){
+				hit(cardDealer.getHand());
+				continue;
+			} else {
+				System.out.println("Dealer's Cards:");
+				showHand(cardDealer.getHand());
+				System.out.println("Player's Cards:");
+				showHand(blackjackHandler.getHand());
+				System.out.println("You Win. Game Over.");
+				blackjackHandler.hitSuccess();
+				return;
+			}
+		}
 		
 	}
 	
 	
-
 }

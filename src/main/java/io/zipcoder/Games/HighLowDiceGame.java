@@ -77,22 +77,27 @@ public class HighLowDiceGame extends DiceGame { // REMOVE
 			// perform check
 			// if passes, give money to the player -- have system.out.println
 			// informative information
-			
-			if (newDiceRoll > currentDiceRoll || checkIfInputHas(userInput, "higher")) {
+
+			// winning logic
+			if ((newDiceRoll > currentDiceRoll && checkIfInputHas(userInput, "higher"))
+					|| (newDiceRoll < currentDiceRoll && checkIfInputHas(userInput, "lower"))) {
 				
-			} else if (newDiceRoll < currentDiceRoll || checkIfInputHas(userInput, "higher")) {
+				//TODO do stuff
+
+				// losing logic
+			} else if ((newDiceRoll < currentDiceRoll && checkIfInputHas(userInput, "higher"))
+					|| (newDiceRoll > currentDiceRoll && checkIfInputHas(userInput, "lower"))) {
 				
-			} else if (newDiceRoll > currentDiceRoll || checkIfInputHas(userInput, "lower")) {
+				//TODO do stuff
 				
-			} else if (newDiceRoll < currentDiceRoll || checkIfInputHas(userInput, "lower")) {
-				
-			} else if (newDiceRoll == currentDiceRoll) {
+				// tie logic
+			} else {
 				diceHandler.giveMoney(bettingPool);
 			}
 
 			System.out.println("\nDo you want to continue the game?");
 			// get user input as boolean value
-			
+
 		}
 
 		return;
@@ -124,26 +129,16 @@ public class HighLowDiceGame extends DiceGame { // REMOVE
 		return betAmount;
 	}
 
+	/**
+	 * Quick and easy method to check that an inputted string contains a sub
+	 * string. Returns true if it does, false if it doesn't
+	 * 
+	 * @param inputString
+	 * @param whatToCheckItContains
+	 * @return boolean
+	 */
 	public static boolean checkIfInputHas(String inputString, String whatToCheckItContains) {
 		return inputString.toLowerCase().indexOf(whatToCheckItContains) != -1;
-	}
-
-	@Deprecated
-	/**
-	 * DO NOT USE THIS
-	 */
-	public Player giveMoney(Player player, double amountToAdd) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Deprecated
-	/**
-	 * DO NOT USE THIS
-	 */
-	public Player takeMoney(Player player, double amountToRemove) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

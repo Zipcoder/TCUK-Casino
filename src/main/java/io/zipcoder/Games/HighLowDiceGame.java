@@ -33,14 +33,12 @@ public class HighLowDiceGame extends DiceGame {
 	 * *************************************************************************
 	 */
 
-	private static int numberOfDiceToPlayWith;
-	private static HighLowDiceHandler diceHandler;
-	private static int bettingPool = 0;
-
 	public static void playGameStatic(Player player) {
 
 		boolean continueGame = true;
-		diceHandler = new HighLowDiceHandler(player);
+		int bettingPool = 0;
+		HighLowDiceHandler diceHandler = new HighLowDiceHandler(player);
+		int numberOfDiceToPlayWith;
 		int currentDiceRoll = 0;
 
 		System.out.println("Welcome to the higher and lower dice game!");
@@ -62,23 +60,24 @@ public class HighLowDiceGame extends DiceGame {
 
 			// check and get the user input
 			boolean receivedInvalidInput = true;
-			int bettableAmount;
+			double bettableAmount;
 			String userInput = null;
 
 			while (receivedInvalidInput) {
-				
+
 				userInput = UserInterface.getUserInputString();
-				
+
 				if (checkIfInputHas(userInput, "higher") || checkIfInputHas(userInput, "lower")) {
-					bettableAmount = getBetAmount();
+					bettableAmount = (double) getBetAmount();
 					if (diceHandler.takeMoney(bettableAmount)) {
 						bettingPool += bettableAmount;
 						receivedInvalidInput = false;
 					} else {
-						System.out.println("Sorry, I didn't understand that, can you say if the next dice will be higher or lower?");
+						System.out.println(
+								"Sorry, I didn't understand that, can you say if the next dice will be higher or lower?");
 					}
 				}
-				
+
 			}
 
 			// if the next roll is what they bet (if they bet high and it is
@@ -155,10 +154,10 @@ public class HighLowDiceGame extends DiceGame {
 	 * 
 	 * @return
 	 */
-	public static int getBetAmount() {
+	public static double getBetAmount() {
 
 		boolean condition = true;
-		int betAmount = 0;
+		double betAmount = 0;
 
 		while (condition) {
 			System.out.println("How much money do you want to bet?");
@@ -167,7 +166,7 @@ public class HighLowDiceGame extends DiceGame {
 			condition = checkBetAmount(betAmount);
 		}
 
-		return betAmount;
+		return (double) betAmount;
 	}
 
 	/**
@@ -176,7 +175,7 @@ public class HighLowDiceGame extends DiceGame {
 	 * @param betAmount
 	 * @return
 	 */
-	public static boolean checkBetAmount(int betAmount) {
+	public static boolean checkBetAmount(double betAmount) {
 		boolean condition;
 		if (diceHandler.getPlayer().checkBet(betAmount)) {
 			System.out.println("You cannot bet that! Please enter a valid bet:");

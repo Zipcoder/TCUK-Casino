@@ -44,7 +44,7 @@ public class CardDealer {
 	
 	public void dealToDealer(int noOfCardsDeal){
 		for(int i = 0; i < noOfCardsDeal; i++){
-			this.dealerHand.getHand().add(deck.draw());
+			dealerHand.addCard(deck.draw());
 		}
 	}
 

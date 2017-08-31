@@ -62,7 +62,7 @@ public class BlackjackGame extends CardGame {
 	// Method To Show The Card
 	public static void showHand(Hand hand){
 		String output = hand.getHand().toString();
-		System.out.println(output);
+		System.out.println(output + " " + computeHandValue(hand) + " point.");
 	}
 	
 	// Hit A Card
@@ -125,6 +125,16 @@ public class BlackjackGame extends CardGame {
 			String userDecision = UserInterface.getUserInputString();
 			if(userDecision.equalsIgnoreCase("Y")){
 				hit(blackjackHandler.getHand());
+				if(computeHandValue(blackjackHandler.getHand()) > 21){
+					System.out.println("Dealer's Cards:");
+					showHand(cardDealer.getHand());
+					System.out.println("Player's Cards:");
+					showHand(blackjackHandler.getHand());
+					System.out.println("You Lose. Game Over.");
+					blackjackHandler.hitFail();
+					System.out.println(player.getName() + ": " + player.getBalance() + ". Try Again! You Will Win Next Time!");
+					return;
+				}
 				System.out.println("Dealer's Cards:");
 				showHand(cardDealer.getHand());
 				System.out.println("Player's Cards:");

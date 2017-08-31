@@ -1,6 +1,7 @@
 package io.zipcoder.Handlers;
 
-public class DiceHandler {
+public abstract class DiceHandler {
+
 
 
 }

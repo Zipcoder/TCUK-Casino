@@ -12,16 +12,19 @@ import io.zipcoder.Handlers.HighLowDiceHandler;
  * @author F628559
  *
  */
-public class HighLowDiceGame extends DiceGame { // REMOVE
-												// implements
-												// bettable
-												// later
+public class HighLowDiceGame extends DiceGame {
 
-	@Override
 	public void playGame() {
 		// TODO Auto-generated method stub
 
 	}
+
+	/*
+	 * *************************************************************************
+	 * This class was written as a static class before it was appa
+	 * *************************************************************************
+	 * 
+	 */
 
 	private static int numberOfDiceToPlayWith;
 	private static HighLowDiceHandler diceHandler;
@@ -73,7 +76,7 @@ public class HighLowDiceGame extends DiceGame { // REMOVE
 
 			diceHandler.setDiceValue(numberOfDiceToPlayWith);
 			int newDiceRoll = diceHandler.getDiceValue();
-			
+
 			System.out.println("");
 
 			// perform check
@@ -84,7 +87,7 @@ public class HighLowDiceGame extends DiceGame { // REMOVE
 			if (winLogic(currentDiceRoll, userInput, newDiceRoll)) {
 
 				// add money to player
-				diceHandler.giveMoney(bettingPool*2);
+				diceHandler.giveMoney(bettingPool * 2);
 				System.out.println("Nice guess!");
 
 				// losing logic
@@ -149,15 +152,21 @@ public class HighLowDiceGame extends DiceGame { // REMOVE
 			System.out.println("How much money do you want to bet?");
 			betAmount = UserInterface.getUserInput();
 
-			if (diceHandler.checkBet(betAmount)) {
-				System.out.println("You cannot bet that! Please enter a valid bet:");
-				condition = true;
-			} else {
-				condition = false;
-			}
+			condition = checkBetAmount(betAmount);
 		}
 
 		return betAmount;
+	}
+
+	private static boolean checkBetAmount(int betAmount) {
+		boolean condition;
+		if (diceHandler.getPlayer().checkBet(betAmount)) {
+			System.out.println("You cannot bet that! Please enter a valid bet:");
+			condition = true;
+		} else {
+			condition = false;
+		}
+		return condition;
 	}
 
 	/**

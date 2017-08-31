@@ -3,7 +3,7 @@ package io.zipcoder;
 /**
  * Created by W550952 on 30/08/2017.
  */
-public class Player implements Bettable {
+public class Player {
     private double balance;
     private String name;
 
@@ -31,7 +31,7 @@ public class Player implements Bettable {
     }
 
     public boolean reduceBalance(double amount){
-        if (amount > 0 && (balance - amount) > 0){
+        if (amount > 0){
             balance -= amount;
             return true;
         } else if ((balance - amount) < 0){
@@ -42,4 +42,17 @@ public class Player implements Bettable {
             return false;
         }
     }
+    
+    public boolean checkBet(double bet){
+		
+		// checks that the balance of the player doesn't go negative upon bet
+		// returns true if safe to bet i.e. player has enough money
+    	//check bet isn't a negative number before
+		
+		if ((this.getBalance() - bet) >= 0 && bet >=0) {
+			return true;
+		} 
+		return false;
+		
+	}
 }

@@ -47,17 +47,17 @@ public class BlackjackGame extends CardGame {
 		return sumValue;
 	}
 
-	@Override
-	public int compareCards(Hand hand, Hand otherHand) {
-		if(computeHandValue(hand) > computeHandValue(otherHand)){
-			return 1;
-		}else if(computeHandValue(hand) < computeHandValue(otherHand)){
-			return -1;
-		}else{
-			return 0;
-		}
-	
-	}
+//	@Override
+//	public int compareCards(Hand hand, Hand otherHand) {
+//		if(computeHandValue(hand) > computeHandValue(otherHand)){
+//			return 1;
+//		}else if(computeHandValue(hand) < computeHandValue(otherHand)){
+//			return -1;
+//		}else{
+//			return 0;
+//		}
+//	
+//	}
 	
 	// Method To Show The Card
 	public static void showHand(Hand hand){
@@ -86,6 +86,10 @@ public class BlackjackGame extends CardGame {
 		// Dealer Deal Two Cards To The Player Hand
 		blackjackHandler.getHand().addCard(cardDealer.deal());
 		blackjackHandler.getHand().addCard(cardDealer.deal());
+		System.out.println("Dealer's Cards:");
+		showHand(cardDealer.getHand());
+		System.out.println("Player's Cards:");
+		showHand(blackjackHandler.getHand());
 		
 		// Compute Dealer Hand Value
 		int dealerHandValue = computeHandValue(cardDealer.getHand());
@@ -95,21 +99,23 @@ public class BlackjackGame extends CardGame {
 		
 		// BlackJack At The First Two Cards
 		if(playerHandValue == 21 && dealerHandValue == 21){
-			System.out.println("Dealer's Cards:");
-			showHand(cardDealer.getHand());
-			System.out.println("Player's Cards:");
-			showHand(blackjackHandler.getHand());
+//			System.out.println("Dealer's Cards:");
+//			showHand(cardDealer.getHand());
+//			System.out.println("Player's Cards:");
+//			showHand(blackjackHandler.getHand());
 			System.out.println("This is a tie. Game Over.");
+			System.out.println(player.getName() + ": " + player.getBalance() + ". See You Next Time!");
 			return;
 		}
 		
 		if(playerHandValue == 21 && dealerHandValue != 21){
-			System.out.println("Dealer's Cards:");
-			showHand(cardDealer.getHand());
-			System.out.println("Player's Cards:");
-			showHand(blackjackHandler.getHand());
+//			System.out.println("Dealer's Cards:");
+//			showHand(cardDealer.getHand());
+//			System.out.println("Player's Cards:");
+//			showHand(blackjackHandler.getHand());
 			System.out.println("BlackJack! You Win!!!");
 			blackjackHandler.hitSuccess();
+			System.out.println(player.getName() + ": " + player.getBalance() + ". Well Done! Play More!");
 			return;
 		}
 		
@@ -140,6 +146,7 @@ public class BlackjackGame extends CardGame {
 				showHand(blackjackHandler.getHand());
 				System.out.println("You Lose. Game Over.");
 				blackjackHandler.hitFail();
+				System.out.println(player.getName() + ": " + player.getBalance() + ". Try Again! You Will Win Next Time!");
 				return;
 			} else if(computeHandValue(cardDealer.getHand()) == computeHandValue(blackjackHandler.getHand())){
 				System.out.println("Dealer's Cards:");
@@ -147,6 +154,7 @@ public class BlackjackGame extends CardGame {
 				System.out.println("Player's Cards:");
 				showHand(blackjackHandler.getHand());
 				System.out.println("This is a tie. Game Over.");
+				System.out.println(player.getName() + ": " + player.getBalance() + ". See You Next Time!");
 				return;
 			} else if(computeHandValue(cardDealer.getHand()) < 17){
 				hit(cardDealer.getHand());
@@ -158,6 +166,7 @@ public class BlackjackGame extends CardGame {
 				showHand(blackjackHandler.getHand());
 				System.out.println("You Win. Game Over.");
 				blackjackHandler.hitSuccess();
+				System.out.println(player.getName() + ": " + player.getBalance() + ". Well Done! Play More!");
 				return;
 			}
 		}

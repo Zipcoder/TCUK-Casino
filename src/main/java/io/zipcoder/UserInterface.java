@@ -19,6 +19,13 @@ public class UserInterface {
         sc.close();
         return output;
     }
+    
+    public static Double getUserInputDouble(){
+        Scanner sc = new Scanner(System.in);
+        double output = sc.nextDouble();
+        sc.close();
+        return output;
+    }
 
     public String welcome(){
         return "Welcome to the Casino!";

@@ -8,6 +8,12 @@ public abstract class CardHandler extends Handler {
 	protected Hand hand;
 	private CardDealer cardDealer;
 	
+	
+	
+	public CardHandler() {
+		this.hand = new Hand();
+		this.cardDealer = new CardDealer();
+	}
 	public Hand getHand() {
 		return hand;
 	}

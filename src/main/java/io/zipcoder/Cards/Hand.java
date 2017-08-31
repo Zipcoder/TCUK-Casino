@@ -50,4 +50,13 @@ public class Hand {
         hand = new ArrayList<Card>();
         numberOfCards = 0;
     }
+    
+    @Override
+    public String toString(){
+    	String output = "";
+    	for(int i = 0; i < numberOfCards; i++){
+    		output += hand.get(i).getSuit() + "-" + hand.get(i).getValue() + "  ";
+    	}
+    	return output;
+    }
 }

@@ -9,6 +9,7 @@ public class BlackjackHandler extends CardHandler {
     private Player player;
 
     public BlackjackHandler(Player player){
+    	super();
         this.player = player;
         pot = 0;
         stake = 0;

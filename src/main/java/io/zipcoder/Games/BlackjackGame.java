@@ -149,7 +149,7 @@ public class BlackjackGame extends CardGame {
 		
 		// Dealer's Action
 		while(true){
-			if(computeHandValue(cardDealer.getHand()) > computeHandValue(blackjackHandler.getHand())){
+			if(computeHandValue(cardDealer.getHand()) > computeHandValue(blackjackHandler.getHand()) && computeHandValue(cardDealer.getHand()) <= 21){
 				System.out.println("Dealer's Cards:");
 				showHand(cardDealer.getHand());
 				System.out.println("Player's Cards:");
@@ -166,7 +166,7 @@ public class BlackjackGame extends CardGame {
 				System.out.println("This is a tie. Game Over.");
 				System.out.println(player.getName() + ": " + player.getBalance() + ". See You Next Time!");
 				return;
-			} else if(computeHandValue(cardDealer.getHand()) < 17){
+			} else if(computeHandValue(cardDealer.getHand()) < 17 || computeHandValue(cardDealer.getHand()) < computeHandValue(blackjackHandler.getHand())){
 				hit(cardDealer.getHand());
 				continue;
 			} else {

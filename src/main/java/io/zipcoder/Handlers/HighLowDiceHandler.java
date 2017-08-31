@@ -45,16 +45,5 @@ public class HighLowDiceHandler extends DiceHandler {
 		return 0.0;
 	}
 	
-	public boolean checkBet(double bet){
-		
-		// checks that the balance of the player doesn't go negative upon bet
-		// returns true if safe to bet i.e. player has enough money
-		
-		if ((player.getBalance() - bet) >= 0) {
-			return true;
-		} else {
-		return false;
-		}
-	}
 	
 }

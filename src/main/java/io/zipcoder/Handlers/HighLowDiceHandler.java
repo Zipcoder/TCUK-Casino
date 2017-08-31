@@ -1,10 +1,9 @@
 package io.zipcoder.Handlers;
 
-import io.zipcoder.Bettable;
 import io.zipcoder.Dice;
 import io.zipcoder.Player;
 
-public class HighLowDiceHandler extends DiceHandler implements Bettable {
+public class HighLowDiceHandler extends DiceHandler {
 
 	private int diceValue;
 	private int numberOfDice;
@@ -26,28 +25,36 @@ public class HighLowDiceHandler extends DiceHandler implements Bettable {
 	}
 
 	public int getDiceValue() {
-		// get value from rollDice function
+		// get value from rollDice function w/in Dice class
 		return diceValue;
 	}
 
 	public int getNumberOfDice() {
 		return numberOfDice;
 	}
+	 
+	public void giveMoney(Player player, double amountToAdd) {
 	
-	//wrapper methods - create a method that only allows us to give/take an amount 
-	public Player giveMoney(Player player, double amountToAdd) {
-	
-		// TODO Auto-generated method stub
-		return null;
 		
 	}
 
-	public Player takeMoney(Player player, double amountToRemove) {
-		// TODO Auto-generated method stub
+	public double takeMoney(Player player, double amountToRemove) {
+
 		//check available funds first is > 0 - getBalance method on player
-		//
-		return null;
+		
+		return 0.0;
 	}
 	
+	public boolean checkBet(double bet){
+		
+		// checks that the balance of the player doesn't go negative upon bet
+		// returns true if safe to bet i.e. player has enough money
+		
+		if ((player.getBalance() - bet) >= 0) {
+			return true;
+		} else {
+		return false;
+		}
+	}
 	
 }

@@ -73,28 +73,33 @@ public class HighLowDiceGame extends DiceGame { // REMOVE
 
 			diceHandler.setDiceValue(numberOfDiceToPlayWith);
 			int newDiceRoll = diceHandler.getDiceValue();
+			
+			System.out.println("");
 
 			// perform check
 			// if passes, give money to the player -- have system.out.println
 			// informative information
 
 			// winning logic
-			if ((newDiceRoll > currentDiceRoll && checkIfInputHas(userInput, "higher"))
-					|| (newDiceRoll < currentDiceRoll && checkIfInputHas(userInput, "lower"))) {
-				
-				//TODO do stuff
+			if (winLogic(currentDiceRoll, userInput, newDiceRoll)) {
+
+				// add money to player
+				diceHandler.giveMoney(bettingPool*2);
+				System.out.println("Nice guess!");
 
 				// losing logic
-			} else if ((newDiceRoll < currentDiceRoll && checkIfInputHas(userInput, "higher"))
-					|| (newDiceRoll > currentDiceRoll && checkIfInputHas(userInput, "lower"))) {
-				
-				//TODO do stuff
-				
+			} else if (loseLogic(currentDiceRoll, userInput, newDiceRoll)) {
+
+				// don't give money to player.
+				System.out.println("Bad luck!");
+
 				// tie logic
 			} else {
 				diceHandler.giveMoney(bettingPool);
+				System.out.println("Wow, that's cheeky");
 			}
 
+			bettingPool = 0;
 			System.out.println("\nDo you want to continue the game?");
 			// get user input as boolean value
 
@@ -102,6 +107,32 @@ public class HighLowDiceGame extends DiceGame { // REMOVE
 
 		return;
 
+	}
+
+	/**
+	 * check the user has won the bet
+	 * 
+	 * @param currentDiceRoll
+	 * @param userInput
+	 * @param newDiceRoll
+	 * @return true if the user has won
+	 */
+	public static boolean loseLogic(int currentDiceRoll, String userInput, int newDiceRoll) {
+		return (newDiceRoll < currentDiceRoll && checkIfInputHas(userInput, "higher"))
+				|| (newDiceRoll > currentDiceRoll && checkIfInputHas(userInput, "lower"));
+	}
+
+	/**
+	 * check the user has lost the bet
+	 * 
+	 * @param currentDiceRoll
+	 * @param userInput
+	 * @param newDiceRoll
+	 * @return true if user has lost
+	 */
+	public static boolean winLogic(int currentDiceRoll, String userInput, int newDiceRoll) {
+		return (newDiceRoll > currentDiceRoll && checkIfInputHas(userInput, "higher"))
+				|| (newDiceRoll < currentDiceRoll && checkIfInputHas(userInput, "lower"));
 	}
 
 	/**

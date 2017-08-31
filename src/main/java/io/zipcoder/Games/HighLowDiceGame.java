@@ -2,65 +2,201 @@
  * 
  */
 package io.zipcoder.Games;
+
 import io.zipcoder.Bettable;
 import io.zipcoder.Player;
 import io.zipcoder.UserInterface;
-import io.zipcoder.Handlers.DiceHandler;
+import io.zipcoder.Handlers.HighLowDiceHandler;
 
 /**
  * @author F628559
  *
  */
-public class HighLowDiceGame extends DiceGame implements Bettable {
+public class HighLowDiceGame extends DiceGame {
 
-	private int numberOfDiceToPlayWith;
-	private DiceHandler diceHandler;
-	
-	public HighLowDiceGame(){
-		
+	private Player player;
+
+	public HighLowDiceGame(Player player) {
+		this.player = player;
 	}
-	
+
 	@Override
-	public void playGame() {
-		
+	public void playGame(Player player) {
+		this.player = player;
+		HighLowDiceGame.playGameStatic(player);
+	}
+
+	/*
+	 * *************************************************************************
+	 * This class was written as a static class as the method does not require
+	 * state, hence why all internal methods are static
+	 * *************************************************************************
+	 */
+
+	private static int numberOfDiceToPlayWith;
+	private static HighLowDiceHandler diceHandler;
+	private static int bettingPool = 0;
+
+	public static void playGameStatic(Player player) {
+
 		boolean continueGame = true;
-		
+		diceHandler = new HighLowDiceHandler(player);
+		int currentDiceRoll = 0;
+
 		System.out.println("Welcome to the higher and lower dice game!");
-		
-		while(continueGame){
-		
+
+		while (continueGame) {
+
 			// select number of dice to play with
 			System.out.println("How many dice do you want to play with? Please type a number:");
-			int diceToPlayWith = UserInterface.getUserInput(); // BUG: may crash if not handed an int
-			this.diceHandler = new DiceHandler();
-			
+			numberOfDiceToPlayWith = UserInterface.getUserInput();
+
 			// randomly throw dice at the player
-			//int diceRoll1 = diceHandler.set
-			
-			
-			// let the player bet if they want to: 
-			// bet if the next roll will be higher or lower 
-			
-			// if the next roll is what they bet (if they bet high and it is high) , return money to the player
-			// this should be scaled?? 
-			
-		
+			diceHandler.setDiceValue(numberOfDiceToPlayWith);
+			currentDiceRoll = diceHandler.getDiceValue();
+
+			// Tell player what the number is then let the player bet if they
+			// want to: bet if the next roll will be higher or lower
+			System.out.println("The dice roll added up to: " + currentDiceRoll
+					+ " do you want to bet whether the next dice roll will be higher or lower?");
+
+			// check and get the user input
+			boolean receivedInvalidInput = true;
+			int bettableAmount;
+			String userInput = null;
+
+			while (receivedInvalidInput) {
+				
+				userInput = UserInterface.getUserInputString();
+				
+				if (checkIfInputHas(userInput, "higher") || checkIfInputHas(userInput, "lower")) {
+					bettableAmount = getBetAmount();
+					if (diceHandler.takeMoney(bettableAmount)) {
+						bettingPool += bettableAmount;
+						receivedInvalidInput = false;
+					} else {
+						System.out.println("Sorry, I didn't understand that, can you say if the next dice will be higher or lower?");
+					}
+				}
+				
+			}
+
+			// if the next roll is what they bet (if they bet high and it is
+			// high) , return money to the player
+			// this should be scaled?
+			// diceHandler get last roll, then re-roll.
+
+			diceHandler.setDiceValue(numberOfDiceToPlayWith);
+			int newDiceRoll = diceHandler.getDiceValue();
+
+			System.out.println("");
+
+			// perform check
+			// if passes, give money to the player -- have system.out.println
+			// informative information
+
+			// winning logic
+			if (winLogic(currentDiceRoll, userInput, newDiceRoll)) {
+
+				// add money to player
+				diceHandler.giveMoney(bettingPool * 2);
+				System.out.println("Nice guess!");
+
+				// losing logic
+			} else if (loseLogic(currentDiceRoll, userInput, newDiceRoll)) {
+
+				// don't give money to player.
+				System.out.println("Bad luck!");
+
+				// tie logic
+			} else {
+				diceHandler.giveMoney(bettingPool);
+				System.out.println("Wow, that's cheeky");
+			}
+
+			bettingPool = 0;
 			System.out.println("\nDo you want to continue the game?");
 			// get user input as boolean value
+
 		}
-		
+
 		return;
-				
+
 	}
 
-	public Player giveMoney(Player player, double amountToAdd) {
-		// TODO Auto-generated method stub
-		return null;
+	/**
+	 * check the user has won the bet
+	 * 
+	 * @param currentDiceRoll
+	 * @param userInput
+	 * @param newDiceRoll
+	 * @return true if the user has won
+	 */
+	public static boolean loseLogic(int currentDiceRoll, String userInput, int newDiceRoll) {
+		return (newDiceRoll < currentDiceRoll && checkIfInputHas(userInput, "higher"))
+				|| (newDiceRoll > currentDiceRoll && checkIfInputHas(userInput, "lower"));
 	}
 
-	public Player takeMoney(Player player, double amountToRemove) {
-		// TODO Auto-generated method stub
-		return null;
+	/**
+	 * check the user has lost the bet
+	 * 
+	 * @param currentDiceRoll
+	 * @param userInput
+	 * @param newDiceRoll
+	 * @return true if user has lost
+	 */
+	public static boolean winLogic(int currentDiceRoll, String userInput, int newDiceRoll) {
+		return (newDiceRoll > currentDiceRoll && checkIfInputHas(userInput, "higher"))
+				|| (newDiceRoll < currentDiceRoll && checkIfInputHas(userInput, "lower"));
+	}
+
+	/**
+	 * get a bet and return the int
+	 * 
+	 * @return
+	 */
+	public static int getBetAmount() {
+
+		boolean condition = true;
+		int betAmount = 0;
+
+		while (condition) {
+			System.out.println("How much money do you want to bet?");
+			betAmount = UserInterface.getUserInput();
+
+			condition = checkBetAmount(betAmount);
+		}
+
+		return betAmount;
+	}
+
+	/**
+	 * 
+	 * 
+	 * @param betAmount
+	 * @return
+	 */
+	public static boolean checkBetAmount(int betAmount) {
+		boolean condition;
+		if (diceHandler.getPlayer().checkBet(betAmount)) {
+			System.out.println("You cannot bet that! Please enter a valid bet:");
+			condition = true;
+		} else {
+			condition = false;
+		}
+		return condition;
+	}
+
+	/**
+	 * Quick and easy method to check that an inputted string contains a sub
+	 * string. Returns true if it does, false if it doesn't
+	 * 
+	 * @param inputString
+	 * @param whatToCheckItContains
+	 * @return boolean
+	 */
+	public static boolean checkIfInputHas(String inputString, String whatToCheckItContains) {
+		return inputString.toLowerCase().indexOf(whatToCheckItContains) != -1;
 	}
 
 }

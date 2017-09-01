@@ -1,15 +1,26 @@
 package io.zipcoder;
 
+import transactions.Transaction;
+import transactions.TransactionLog;
+
 /**
  * Created by W550952 on 30/08/2017.
  */
 public class Player {
     private double balance;
     private String name;
+    private TransactionLog log;
+    private String currentGame;
 
     public Player(String name, double balance){
-        this.balance = balance;
+    	this(name, balance, new TransactionLog());
+    }
+    
+    public Player(String name, double balance, TransactionLog log){
+    	this.balance = balance;
         this.name = name;
+    	this.log = log;
+    	this.currentGame = "";
     }
 
     public double getBalance(){
@@ -23,6 +34,8 @@ public class Player {
     public boolean increaseBalance(double amount){
         if (amount > 0){
             balance += amount;
+            // update Transaction log
+            this.log.updateTransaction(new Transaction(this, amount, currentGame, balance));
             return true;
         } else {
             System.out.println("Cannot increase by zero or less");
@@ -33,6 +46,8 @@ public class Player {
     public boolean reduceBalance(double amount){
         if (amount > 0){
             balance -= amount;
+            // update Transaction log
+            this.log.updateTransaction(new Transaction(this, amount, currentGame, balance));
             return true;
         } else if ((balance - amount) < 0){
             System.out.println("Not enough money");
@@ -55,4 +70,20 @@ public class Player {
 		return false;
 		
 	}
+
+	/**
+	 * @param log the log to set
+	 */
+	public void setLog(TransactionLog log) {
+		this.log = log;
+	}
+
+	/**
+	 * @param currentGame the currentGame to set
+	 */
+	public void setCurrentGame(String currentGame) {
+		this.currentGame = currentGame;
+	}
+    
+    
 }

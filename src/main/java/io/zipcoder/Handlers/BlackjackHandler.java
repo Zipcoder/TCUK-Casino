@@ -32,8 +32,10 @@ public class BlackjackHandler extends CardHandler {
             stake = amount;
             pot += amount;
             return true;
+        } else {
+            System.out.println("Amount cannot be less than 0");
+            return false;
         }
-        System.out.println("Amount cannot be less than 0");
-        return false;
+
     }
 }

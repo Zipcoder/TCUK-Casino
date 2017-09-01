@@ -54,30 +54,47 @@ public class HighLowCardGame {
 
         System.out.println("The first card is: " + cardRevealed + ".\nPlease guess Higher or Lower.");
         String input = UserInterface.getUserInputString();
-        while ((!input.equalsIgnoreCase("Higher")) || (!input.equalsIgnoreCase("Lower"))){
+        while (!input.equalsIgnoreCase("Higher") && !input.equalsIgnoreCase("Lower")){
             System.out.println("That is not a valid input. Please type Higher or Lower");
             input = UserInterface.getUserInputString();
         }
 
         System.out.println("The second card is: " + cardHidden + ".");
 
-        if (compareCards(cardRevealed, cardHidden) == 1){
-            handler.cardHigher();
-            System.out.println("You win!");
-        } else if (compareCards(cardRevealed, cardHidden) == -1){
-            handler.cardLower();
-            System.out.println("You lose!");
-        } else {
-            System.out.println("The values were the same, you tied.");
+        int comparison = compareCards(cardRevealed, cardHidden);
+
+        if (input.equalsIgnoreCase("Higher")){
+            if (comparison == 1){
+                handler.cardHigher();
+                System.out.println("You win!");
+            } else if (comparison == -1){
+                handler.cardLower();
+                System.out.println("You lose!");
+            } else {
+                System.out.println("The values were the same, you tied.");
+            }
+        } else if (input.equalsIgnoreCase("Lower")){
+            if (comparison == -1){
+                handler.cardHigher();
+                System.out.println("You win!");
+            } else if (comparison == 1){
+                handler.cardLower();
+                System.out.println("You lose!");
+            } else {
+                System.out.println("The values were the same, you tied.");
+            }
         }
 
         System.out.println("Your balance is: " + handler.getPlayer().getBalance());
     }
 
     public static int compareCards(Card card, Card otherCard) {
-        if (values.get(card.getValue()) > values.get(otherCard.getValue())){
-            return 1;
-        } else if (values.get(card.getValue()) < values.get(otherCard.getValue())){
+        // this checks if the first card is SMALLER than the second - that the second is higher
+       if (values.get(card.getValue()) < values.get(otherCard.getValue())){
+           return 1;
+        }
+       // this checks if the first card is LARGER than the second - that the first is higher
+        else if (values.get(card.getValue()) > values.get(otherCard.getValue())){
             return -1;
         } else {
             return 0;

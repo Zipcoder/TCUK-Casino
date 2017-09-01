@@ -117,7 +117,7 @@ public class UserInterface {
 		return 0.0;
 	}
 
-	private static void sendUpwardsToUser(String userReadableString) {
+	public static void sendUpwardsToUser(String userReadableString) {
 		if (useSystemOutFunciton) {
 			System.out.println(userReadableString);
 		} else {

@@ -27,7 +27,6 @@ public class Casino {
 		try {
 			getPlayers();
 		} catch (IOException e){
-			System.out.println(e);
 			players = new ArrayList<Player>();
 		}
 
@@ -65,7 +64,7 @@ public class Casino {
 		System.out.println("Thank you for playing! See you next time.");
 		try {
 			savePlayers();
-		} catch (Exception e){
+		} catch (IOException e){
 			System.out.println(e);
 		}
 	}
@@ -127,8 +126,7 @@ public class Casino {
 		}
 	}
 
-	public void savePlayers() throws FileNotFoundException {
-		ClassLoader classLoader = getClass().getClassLoader();
+	public void savePlayers() throws IOException {
 		File file = new File(System.getProperty("user.home") + File.separator + "Documents" + File.separator + "players.txt");
 
 		try {
@@ -154,9 +152,7 @@ public class Casino {
 		}
 	}
 
-	public void getPlayers() throws FileNotFoundException, IOException {
-		StringBuilder sb = new StringBuilder();
-		ClassLoader classLoader = getClass().getClassLoader();
+	public void getPlayers() throws IOException {
 		File file = new File(System.getProperty("user.home") + File.separator + "Documents"  + File.separator + "players.txt");
 
 		FileReader fileReader = new FileReader(file);

@@ -95,6 +95,12 @@ public class BlackjackGame extends CardGame {
 		double amount = UserInterface.getUserInputDouble();
 		
 		// Bet At The Beginning Of The Game
+		while (!player.checkBet(amount)){
+			System.out.println("You don't have enough money to bet that! Your current balance is " + player.getBalanceAsString());
+			System.out.println("How much would you like to bet?");
+			amount = UserInterface.getUserInputDouble();
+		}
+
 		blackjackHandler.makeStake(amount);
 		
 		// Deal Two Cards To The Dealer

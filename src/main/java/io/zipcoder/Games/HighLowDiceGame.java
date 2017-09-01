@@ -4,6 +4,7 @@
 package io.zipcoder.Games;
 
 import io.zipcoder.Bettable;
+import io.zipcoder.Casino;
 import io.zipcoder.Player;
 import io.zipcoder.UserInterface;
 import io.zipcoder.Handlers.HighLowDiceHandler;

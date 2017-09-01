@@ -8,6 +8,7 @@ import io.zipcoder.Player;
 public class MainForDebug {
     public static void main(String[] args){
         Player player = new Player("Lily", 500);
-        HighLowDiceGame.playGameStatic(player);
+        BlackjackGame game = new BlackjackGame();
+        game.playGame(player);
     }
 }

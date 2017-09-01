@@ -18,6 +18,10 @@ public class Casino {
 		Player player = null;
 		System.out.println("Welcome to the casino! Do you have an account? Please type Yes or No.");
 		String account = UserInterface.getUserInputString();
+		while (!account.equalsIgnoreCase("Yes") && !account.equalsIgnoreCase("No")){
+			System.out.println("That is not a valid input. Please say Yes or No.");
+			account = UserInterface.getUserInputString();
+		}
 
 		if (account.equalsIgnoreCase("Yes")){
 			System.out.println("What is your username?");
@@ -34,7 +38,7 @@ public class Casino {
 		String anotherGame = "Yes";
 		while (anotherGame.equalsIgnoreCase("Yes")){
 			chooseGame(player);
-			System.out.println("Do you want to play another game? Please say Yes or No.");
+			System.out.println("Do you want to play a different game? Please say Yes or No.");
 			anotherGame = UserInterface.getUserInputString();
 			while (!anotherGame.equalsIgnoreCase("Yes") && !anotherGame.equalsIgnoreCase("No")){
 				System.out.println("That is not a valid input. Please say Yes or No.");

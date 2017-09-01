@@ -33,7 +33,7 @@ public class HighLowCardGame {
         values.put(Value.KING, 13);
     }
 
-    public static void playGame(Player player){
+    public static void playGame(Player player) {
         /*
         Ask for bet
         Create 2 cards
@@ -46,46 +46,57 @@ public class HighLowCardGame {
 
         handler = new HighLowCardHandler(player);
         dealer = new CardDealer();
+        String again;
 
-        System.out.println("Welcome to the Hi-Lo Card Game! How much would you like to bet?");
-        handler.makeStake(UserInterface.getUserInputDouble());
-        Card cardRevealed = dealer.deal();
-        Card cardHidden = dealer.deal();
+        System.out.println("Welcome to the Hi-Lo Card Game!");
+        do {
+            System.out.println("How much would you like to bet?");
+            handler.makeStake(UserInterface.getUserInputDouble());
+            Card cardRevealed = dealer.deal();
+            Card cardHidden = dealer.deal();
 
-        System.out.println("The first card is: " + cardRevealed + ".\nPlease guess Higher or Lower.");
-        String input = UserInterface.getUserInputString();
-        while (!input.equalsIgnoreCase("Higher") && !input.equalsIgnoreCase("Lower")){
-            System.out.println("That is not a valid input. Please type Higher or Lower");
-            input = UserInterface.getUserInputString();
-        }
-
-        System.out.println("The second card is: " + cardHidden + ".");
-
-        int comparison = compareCards(cardRevealed, cardHidden);
-
-        if (input.equalsIgnoreCase("Higher")){
-            if (comparison == 1){
-                handler.cardHigher();
-                System.out.println("You win!");
-            } else if (comparison == -1){
-                handler.cardLower();
-                System.out.println("You lose!");
-            } else {
-                System.out.println("The values were the same, you tied.");
+            System.out.println("The first card is: " + cardRevealed + ".\nPlease guess Higher or Lower.");
+            String input = UserInterface.getUserInputString();
+            while (!input.equalsIgnoreCase("Higher") && !input.equalsIgnoreCase("Lower")) {
+                System.out.println("That is not a valid input. Please type Higher or Lower");
+                input = UserInterface.getUserInputString();
             }
-        } else if (input.equalsIgnoreCase("Lower")){
-            if (comparison == -1){
-                handler.cardHigher();
-                System.out.println("You win!");
-            } else if (comparison == 1){
-                handler.cardLower();
-                System.out.println("You lose!");
-            } else {
-                System.out.println("The values were the same, you tied.");
-            }
-        }
 
-        System.out.println("Your balance is: " + handler.getPlayer().getBalance());
+            System.out.println("The second card is: " + cardHidden + ".");
+
+            int comparison = compareCards(cardRevealed, cardHidden);
+
+            if (input.equalsIgnoreCase("Higher")) {
+                if (comparison == 1) {
+                    handler.cardHigher();
+                    System.out.println("You win!");
+                } else if (comparison == -1) {
+                    handler.cardLower();
+                    System.out.println("You lose!");
+                } else {
+                    System.out.println("The values were the same, you tied.");
+                }
+            } else if (input.equalsIgnoreCase("Lower")) {
+                if (comparison == -1) {
+                    handler.cardHigher();
+                    System.out.println("You win!");
+                } else if (comparison == 1) {
+                    handler.cardLower();
+                    System.out.println("You lose!");
+                } else {
+                    System.out.println("The values were the same, you tied.");
+                }
+            }
+            System.out.println("Your balance is: " + handler.getPlayer().getBalance());
+            System.out.println("Do you want to play again? Please type Yes or No.");
+            again = UserInterface.getUserInputString();
+            while (!again.equalsIgnoreCase("Yes") && !again.equalsIgnoreCase("No")){
+                System.out.println("That is not a valid input. Please say Yes or No.");
+                again = UserInterface.getUserInputString();
+            }
+        } while (again.equalsIgnoreCase("Yes"));
+
+        System.out.println("Thank you for playing Higher or Lower Card Game!");
     }
 
     public static int compareCards(Card card, Card otherCard) {

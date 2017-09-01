@@ -55,6 +55,10 @@ public class HighLowDiceGame extends DiceGame {
 			// select number of dice to play with
 			System.out.println("How many dice do you want to play with? Please type a number:");
 			numberOfDiceToPlayWith = UserInterface.getUserInput();
+			while (numberOfDiceToPlayWith < 1 || numberOfDiceToPlayWith > 10){
+				System.out.println("That is not a valid number, please enter a number between 1 and 10");
+				numberOfDiceToPlayWith = UserInterface.getUserInput();
+			}
 
 			// randomly throw dice at the player
 			diceHandler.setDiceValue(numberOfDiceToPlayWith);
@@ -120,6 +124,8 @@ public class HighLowDiceGame extends DiceGame {
 				diceHandler.giveMoney(bettingPool);
 				System.out.println("Wow, that's cheeky");
 			}
+
+			System.out.println("Your new balance is: " + player.getBalance());
 
 			bettingPool = 0;
 			System.out.println("\nDo you want to continue the game?");

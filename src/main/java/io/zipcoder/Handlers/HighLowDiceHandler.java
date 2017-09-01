@@ -7,11 +7,10 @@ public class HighLowDiceHandler extends DiceHandler {
 
 	private int diceValue;
 	private int numberOfDice;
-	private Player player;
 
 	//constructor
 	public HighLowDiceHandler(Player player) {
-		this.player = player;
+		super(player);
 	}
 	
 	//get player

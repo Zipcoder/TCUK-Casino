@@ -117,7 +117,12 @@ public class UserInterface {
 		return 0.0;
 	}
 
-	private static void sendUpwardsToUser(String userReadableString) {
+	/**
+	 * Push the inputed string up to the user. Currently only sends to system.out.println
+	 * 
+	 * @param userReadableString
+	 */
+	public static void sendUpwardsToUser(String userReadableString) {
 		if (useSystemOutFunciton) {
 			System.out.println(userReadableString);
 		} else {

@@ -8,9 +8,7 @@ public abstract class CardHandler extends Handler {
 
 	protected Hand hand;
 	private CardDealer cardDealer;
-	
-	
-	
+
 	public CardHandler(Player player, Hand hand, CardDealer cardDealer) {
 		super(player);
 		this.hand = hand;

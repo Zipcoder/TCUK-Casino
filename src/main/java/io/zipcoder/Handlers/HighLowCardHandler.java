@@ -6,10 +6,9 @@ import io.zipcoder.Player;
 public class HighLowCardHandler extends CardHandler {
 	private double pot;
 	private double stake;
-	private Player player;
 
 	public HighLowCardHandler(Player player){
-		this.player = player;
+		super(player);
 		pot = 0;
 		stake = 0;
 	}

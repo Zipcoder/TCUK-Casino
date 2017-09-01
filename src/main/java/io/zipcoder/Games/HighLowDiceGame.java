@@ -1,6 +1,3 @@
-/**
- * 
- */
 package io.zipcoder.Games;
 
 import io.zipcoder.Bettable;
@@ -20,12 +17,6 @@ public class HighLowDiceGame extends DiceGame {
 	public HighLowDiceGame(Player player) {
 		this.player = player;
 	}
-
-//	 TEST METHOD
-//	public static void main(String[] arg) {
-//		Player p = new Player("bob", 1000);
-//		HighLowDiceGame.playGameStatic(p);
-//	}
 
 	@Override
 	public void playGame(Player player) {
@@ -64,29 +55,15 @@ public class HighLowDiceGame extends DiceGame {
 					+ " do you want to bet whether the next dice roll will be higher or lower?");
 
 			// check and get the user input
-			boolean receivedInvalidInput = true;
+			// boolean receivedInvalidInput = true;
 			double bettableAmount;
 			String userInput = null;
 
-			while (receivedInvalidInput) {
+			userInput = getHigherLowerBet(userInput);
 
-				userInput = UserInterface.getUserInputString();
-
-				if (checkIfInputHas(userInput, "higher") || checkIfInputHas(userInput, "lower")) {
-					bettableAmount = (double) getBetAmount(diceHandler);
-					if (diceHandler.takeMoney(bettableAmount)) {
-						bettingPool += bettableAmount;
-						receivedInvalidInput = false;
-					}
-				} else {
-					System.out.println(
-							"Sorry, I didn't understand that, can you say if the next dice will be higher or lower?");
-
-				}
-
-			}
-
-			// if the next roll is what they bet (if they bet high and it is
+			bettingPool = getValidBet(bettingPool, diceHandler);
+			
+		// if the next roll is what they bet (if they bet high and it is
 			// high) , return money to the player
 			// this should be scaled?
 			// diceHandler get last roll, then re-roll.
@@ -106,24 +83,63 @@ public class HighLowDiceGame extends DiceGame {
 
 			bettingPool = 0;
 			System.out.println("\nDo you want to continue the game?");
-			boolean continueCondition = true;
-			while (continueCondition) {
-				userInput = UserInterface.getUserInputString();
-				if ((checkIfInputHas(userInput, "n")) || (checkIfInputHas(userInput, "no"))) {
-					System.out.println("See you next time at higher or lower dice game!");
-					continueCondition = false;
-					continueGame = false;
-				} else if ((checkIfInputHas(userInput, "y")) || (checkIfInputHas(userInput, "yes"))) {
-					System.out.println("Let's go again!");
-					continueCondition = false;
-				} else {
-					System.out.println("Sorry, could you repeat that? (yes/no)");
-				}
-			}
+			continueGame = continueGame(continueGame);
 		}
 
 		return;
 
+	}
+
+	private static int getValidBet(int bettingPool, HighLowDiceHandler diceHandler) {
+		double bettableAmount;
+		boolean invalidBet = true;
+		while (invalidBet) {
+			bettableAmount = (double) getBetAmount(diceHandler);
+			if (diceHandler.takeMoney(bettableAmount)) {
+				bettingPool += bettableAmount;
+				invalidBet = false;
+			}
+		}
+		return bettingPool;
+	}
+
+	private static String getHigherLowerBet(String userInput) {
+		boolean receivedInvalidInput = true;
+		while (receivedInvalidInput) {
+
+			userInput = UserInterface.getUserInputString();
+
+			if (checkIfInputHas(userInput, "higher") || checkIfInputHas(userInput, "lower")) {
+
+				return userInput;
+
+			} else {
+				System.out.println(
+						"Sorry, I didn't understand that, can you say if the next dice will be higher or lower?");
+
+			}
+
+		}
+		return userInput;
+	}
+
+	private static boolean continueGame(boolean continueGame) {
+		String userInput;
+		boolean continueCondition = true;
+		while (continueCondition) {
+			userInput = UserInterface.getUserInputString();
+			if ((checkIfInputHas(userInput, "n")) || (checkIfInputHas(userInput, "no"))) {
+				System.out.println("See you next time at higher or lower dice game!");
+				continueCondition = false;
+				continueGame = false;
+			} else if ((checkIfInputHas(userInput, "y")) || (checkIfInputHas(userInput, "yes"))) {
+				System.out.println("Let's go again!");
+				continueCondition = false;
+			} else {
+				System.out.println("Sorry, could you repeat that? (yes/no)");
+			}
+		}
+		return continueGame;
 	}
 
 	private static void winLoseLogic(int bettingPool, HighLowDiceHandler diceHandler, int currentDiceRoll,
@@ -153,7 +169,7 @@ public class HighLowDiceGame extends DiceGame {
 		// select number of dice to play with
 		System.out.println("How many dice do you want to play with? Please type a number:");
 		numberOfDiceToPlayWith = UserInterface.getUserInput();
-		while (numberOfDiceToPlayWith < 1 || numberOfDiceToPlayWith > 10){
+		while (numberOfDiceToPlayWith < 1 || numberOfDiceToPlayWith > 10) {
 			System.out.println("That is not a valid number, please enter a number between 1 and 10");
 			numberOfDiceToPlayWith = UserInterface.getUserInput();
 		}

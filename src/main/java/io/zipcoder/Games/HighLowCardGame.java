@@ -52,6 +52,11 @@ public class HighLowCardGame {
         do {
             System.out.println("How much would you like to bet?");
             double amount = UserInterface.getUserInputDouble();
+            while (amount < 0){
+                System.out.println("You cannot bet a negative number, please enter a valid bet.");
+                System.out.println("How much would you like to bet?");
+                amount = UserInterface.getUserInputDouble();
+            }
 
             while (!player.checkBet(amount)){
                 System.out.println("You don't have enough money to bet that! Your current balance is " + player.getBalanceAsString());

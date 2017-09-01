@@ -52,13 +52,7 @@ public class HighLowDiceGame extends DiceGame {
 
 		while (continueGame) {
 
-			// select number of dice to play with
-			System.out.println("How many dice do you want to play with? Please type a number:");
-			numberOfDiceToPlayWith = UserInterface.getUserInput();
-			while (numberOfDiceToPlayWith < 1 || numberOfDiceToPlayWith > 10){
-				System.out.println("That is not a valid number, please enter a number between 1 and 10");
-				numberOfDiceToPlayWith = UserInterface.getUserInput();
-			}
+			numberOfDiceToPlayWith = numDice();
 
 			// randomly throw dice at the player
 			diceHandler.setDiceValue(numberOfDiceToPlayWith);
@@ -106,24 +100,7 @@ public class HighLowDiceGame extends DiceGame {
 			// if passes, give money to the player -- have system.out.println
 			// informative information
 
-			// winning logic
-			if (winLogic(currentDiceRoll, userInput, newDiceRoll)) {
-
-				// add money to player
-				diceHandler.giveMoney(bettingPool * 2);
-				System.out.println("You Win!");
-
-				// losing logic
-			} else if (loseLogic(currentDiceRoll, userInput, newDiceRoll)) {
-
-				// don't give money to player.
-				System.out.println("Bad luck!");
-
-				// tie logic
-			} else {
-				diceHandler.giveMoney(bettingPool);
-				System.out.println("Wow, that's cheeky");
-			}
+			winLoseLogic(bettingPool, diceHandler, currentDiceRoll, userInput, newDiceRoll);
 
 			System.out.println("Your new balance is: " + player.getBalance());
 
@@ -147,6 +124,40 @@ public class HighLowDiceGame extends DiceGame {
 
 		return;
 
+	}
+
+	private static void winLoseLogic(int bettingPool, HighLowDiceHandler diceHandler, int currentDiceRoll,
+			String userInput, int newDiceRoll) {
+		// winning logic
+		if (winLogic(currentDiceRoll, userInput, newDiceRoll)) {
+
+			// add money to player
+			diceHandler.giveMoney(bettingPool * 2);
+			System.out.println("You Win!");
+
+			// losing logic
+		} else if (loseLogic(currentDiceRoll, userInput, newDiceRoll)) {
+
+			// don't give money to player.
+			System.out.println("Bad luck!");
+
+			// tie logic
+		} else {
+			diceHandler.giveMoney(bettingPool);
+			System.out.println("Wow, that's cheeky");
+		}
+	}
+
+	private static int numDice() {
+		int numberOfDiceToPlayWith;
+		// select number of dice to play with
+		System.out.println("How many dice do you want to play with? Please type a number:");
+		numberOfDiceToPlayWith = UserInterface.getUserInput();
+		while (numberOfDiceToPlayWith < 1 || numberOfDiceToPlayWith > 10){
+			System.out.println("That is not a valid number, please enter a number between 1 and 10");
+			numberOfDiceToPlayWith = UserInterface.getUserInput();
+		}
+		return numberOfDiceToPlayWith;
 	}
 
 	/**

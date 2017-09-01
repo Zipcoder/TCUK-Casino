@@ -40,9 +40,21 @@ public class BlackjackGame extends CardGame {
 	
 	public static int computeHandValue(Hand hand){
 		int sumValue = 0;
+		int aceCount = 0;
 		for(int i = 0; i < hand.getNumberOfCards(); i++){
 			int cardValue = valueMap.get(hand.getHand().get(i).getValue());
 			sumValue += cardValue;
+			if(cardValue == 11){
+				aceCount++;
+			}
+		}
+		for(int x = 0; x < aceCount; x++){
+			if(sumValue > 21){
+				sumValue = sumValue - 10;
+				if(sumValue < 21){
+					break;
+				}
+			}
 		}
 		return sumValue;
 	}
@@ -62,7 +74,12 @@ public class BlackjackGame extends CardGame {
 	// Method To Show The Card
 	public static void showHand(Hand hand){
 		String output = hand.getHand().toString();
-		System.out.println(output + " " + computeHandValue(hand) + " point.");
+//		if(hand.getHand().size() == 2 && hand.getHand().get(0).equals(Value.ACE)  &&  hand.getHand().get(1).equals(Value.ACE)){
+//			System.out.println(output + " " + " 12 points.");
+//		}else{
+//			System.out.println(output + " " + computeHandValue(hand) + " points.");
+//		}
+		System.out.println(output + " " + computeHandValue(hand) + " points.");
 	}
 	
 	// Hit A Card
@@ -86,10 +103,24 @@ public class BlackjackGame extends CardGame {
 		// Dealer Deal Two Cards To The Player Hand
 		blackjackHandler.getHand().addCard(cardDealer.deal());
 		blackjackHandler.getHand().addCard(cardDealer.deal());
-		System.out.println("Dealer's Cards:");
-		showHand(cardDealer.getHand());
-		System.out.println("Player's Cards:");
-		showHand(blackjackHandler.getHand());
+//		if(valueMap.get(cardDealer.getHand().getHand().get(0)) == 11 && valueMap.get(cardDealer.getHand().getHand().get(1)) == 11){
+//			String output = cardDealer.getHand().getHand().toString();
+//			System.out.println("Dealer's Cards:");
+//			System.out.println(output + " " + "12 point.");
+//			System.out.println("Player's Cards:");
+//			showHand(blackjackHandler.getHand());
+//		}else if(valueMap.get(blackjackHandler.getHand().getHand().get(0)) == 11 && valueMap.get(blackjackHandler.getHand().getHand().get(1)) == 11){
+//			String output = blackjackHandler.getHand().getHand().toString();
+//			System.out.println("Dealer's Cards:");
+//			showHand(cardDealer.getHand());
+//			System.out.println("Player's Cards:");
+//			System.out.println(output + " " + "12 point.");
+//		}else{
+			System.out.println("Dealer's Cards:");
+			showHand(cardDealer.getHand());
+			System.out.println("Player's Cards:");
+			showHand(blackjackHandler.getHand());
+//		}
 		
 		// Compute Dealer Hand Value
 		int dealerHandValue = computeHandValue(cardDealer.getHand());

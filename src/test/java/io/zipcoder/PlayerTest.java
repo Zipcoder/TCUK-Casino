@@ -16,6 +16,17 @@ public class PlayerTest {
 	public void setUpTests() {
 		player = new Player("Harry", 500);
 	}
+	
+	public void getBalanceAsStringTest(){
+		//: Given
+		String expected = "£500.00";
+		
+		// :When
+		String actual = player.getBalanceAsString();
+		
+		// :Then
+		Assert.assertEquals("getBalanaceAsStringTest - string balances matched", expected, actual);
+	}
 
 	@Test
 	public void reduceBalancePositiveTest() {
@@ -27,8 +38,6 @@ public class PlayerTest {
 	@Test
 	public void reduceBalanceBelowZeroTest() {
 		boolean condition = player.reduceBalance(Integer.MAX_VALUE-1);
-
-		System.out.println("current balance: "+ player.getBalance());
 		
 		Assert.assertFalse(condition);
 	}

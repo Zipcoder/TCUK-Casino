@@ -96,5 +96,9 @@ public class Player {
 	public String getCurrentGame() {
 		return currentGame;
 	}
+	
+	public String getBalanceAsString(){
+		return String.format("£%.2f", getBalance());
+	}
 
 }

@@ -15,9 +15,9 @@ public class BlackjackHandler extends CardHandler {
         stake = 0;
     }
 
-//    public Player getPlayer(){
-//        return player;
-//    }
+    public Player getPlayer(){
+        return player;
+    }
 
     public void hitSuccess(){
         player.increaseBalance(pot);

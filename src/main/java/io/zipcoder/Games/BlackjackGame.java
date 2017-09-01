@@ -62,7 +62,7 @@ public class BlackjackGame extends CardGame {
 	// Method To Show The Card
 	public static void showHand(Hand hand){
 		String output = hand.getHand().toString();
-		System.out.println(output);
+		System.out.println(output + " " + computeHandValue(hand) + " point.");
 	}
 	
 	// Hit A Card
@@ -119,12 +119,29 @@ public class BlackjackGame extends CardGame {
 			return;
 		}
 		
-		// Player Decision(handValue < 21)
+		if(playerHandValue != 21 && dealerHandValue == 21){
+			System.out.println("Dealer BlackJack! You Lose. Game Over.");
+			blackjackHandler.hitFail();;
+			System.out.println(player.getName() + ": " + player.getBalance() + ". Try Again! You Will Win Next Time!");
+			return;
+		}
+		
+		// Player Decision(handValue < 21) --- tow ACE switch value!!!
 		while(true){
 			System.out.println("Do you want to hit? Please answer Y/N");
 			String userDecision = UserInterface.getUserInputString();
 			if(userDecision.equalsIgnoreCase("Y")){
 				hit(blackjackHandler.getHand());
+				if(computeHandValue(blackjackHandler.getHand()) > 21){
+					System.out.println("Dealer's Cards:");
+					showHand(cardDealer.getHand());
+					System.out.println("Player's Cards:");
+					showHand(blackjackHandler.getHand());
+					System.out.println("You Lose. Game Over.");
+					blackjackHandler.hitFail();
+					System.out.println(player.getName() + ": " + player.getBalance() + ". Try Again! You Will Win Next Time!");
+					return;
+				}
 				System.out.println("Dealer's Cards:");
 				showHand(cardDealer.getHand());
 				System.out.println("Player's Cards:");
@@ -139,7 +156,7 @@ public class BlackjackGame extends CardGame {
 		
 		// Dealer's Action
 		while(true){
-			if(computeHandValue(cardDealer.getHand()) > computeHandValue(blackjackHandler.getHand())){
+			if(computeHandValue(cardDealer.getHand()) > computeHandValue(blackjackHandler.getHand()) && computeHandValue(cardDealer.getHand()) <= 21){
 				System.out.println("Dealer's Cards:");
 				showHand(cardDealer.getHand());
 				System.out.println("Player's Cards:");
@@ -148,7 +165,7 @@ public class BlackjackGame extends CardGame {
 				blackjackHandler.hitFail();
 				System.out.println(player.getName() + ": " + player.getBalance() + ". Try Again! You Will Win Next Time!");
 				return;
-			} else if(computeHandValue(cardDealer.getHand()) == computeHandValue(blackjackHandler.getHand())){
+			} else if(computeHandValue(cardDealer.getHand()) == computeHandValue(blackjackHandler.getHand()) && computeHandValue(cardDealer.getHand()) >= 17){
 				System.out.println("Dealer's Cards:");
 				showHand(cardDealer.getHand());
 				System.out.println("Player's Cards:");
@@ -156,7 +173,7 @@ public class BlackjackGame extends CardGame {
 				System.out.println("This is a tie. Game Over.");
 				System.out.println(player.getName() + ": " + player.getBalance() + ". See You Next Time!");
 				return;
-			} else if(computeHandValue(cardDealer.getHand()) < 17){
+			} else if(computeHandValue(cardDealer.getHand()) < 17 || computeHandValue(cardDealer.getHand()) < computeHandValue(blackjackHandler.getHand())){
 				hit(cardDealer.getHand());
 				continue;
 			} else {

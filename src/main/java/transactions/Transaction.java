@@ -15,12 +15,12 @@ public class Transaction {
 	 * @param game
 	 * @param amountRemaining
 	 */
-	public Transaction(Player player, double betAmount, String game, double amountRemaining) {
+	public Transaction(Player player, double betAmount) {
 		super();
 		this.player = player;
 		this.betAmount = betAmount;
-		this.game = game;
-		this.amountRemaining = amountRemaining;
+		this.game = player.getCurrentGame();
+		this.amountRemaining = player.getBalance();
 	}
 
 	/**
@@ -28,7 +28,7 @@ public class Transaction {
 	 * @return string
 	 */
 	public String toString(){
-		return "Transaction [Player : "+player+"; betAmount: "+betAmount+"; game :"+game+"; amount remaining: "+amountRemaining+"]";
+		return "Transaction [Player : "+player.getName()+"; betAmount: "+betAmount+"; game: "+game+"; amount remaining: "+amountRemaining+"]";
 	}
 
 	/**

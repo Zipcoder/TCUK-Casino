@@ -23,6 +23,15 @@ public class PlayerTest {
 
 		Assert.assertTrue(condition);
 	}
+	
+	@Test
+	public void reduceBalanceBelowZeroTest() {
+		boolean condition = player.reduceBalance(Integer.MAX_VALUE-1);
+
+		System.out.println("current balance: "+ player.getBalance());
+		
+		Assert.assertFalse(condition);
+	}
 
 	@Test
 	public void increaseBalancePositiveTest() {
@@ -110,4 +119,6 @@ public class PlayerTest {
 		// : Then
 		Assert.assertFalse(actual);
 	}
+	
+	
 }

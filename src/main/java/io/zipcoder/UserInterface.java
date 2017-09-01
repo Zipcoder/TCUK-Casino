@@ -38,9 +38,6 @@ public class UserInterface {
 				System.out.println("Sorry, could you input an integer?");
 			}
 		}
-
-		sc.nextLine();
-
 		return output;
 	}
 
@@ -57,8 +54,6 @@ public class UserInterface {
 				System.out.println("Sorry, could you input a double?");
 			}
 		}
-
-		sc.nextLine();
 
 		return output;
 	}

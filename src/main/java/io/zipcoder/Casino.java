@@ -42,9 +42,19 @@ public class Casino {
 			System.out.println("What is your username?");
 			String name = UserInterface.getUserInputString();
 			player = checkAccount(name);
-			if (player == null){
-				System.out.println("That account does not exist! Please make a new account.");
-				player = createAccount();
+			while (player == null){
+				System.out.println("That account does not exist!");
+				int choice = UserInterface.getUserInput("Would you like to:\n1: Try again?\n2: Create a new account?");
+				switch (choice) {
+					case 1:
+						name = UserInterface.getUserInputString("Please enter your username.");
+						player = checkAccount(name);
+						break;
+					case 2:
+						player = createAccount();
+						players.add(player);
+						break;
+				}
 			}
 		} else if (account.equalsIgnoreCase("No")) {
 			player = createAccount();
@@ -166,4 +176,3 @@ public class Casino {
 		}
 	}
 }
-

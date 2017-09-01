@@ -51,7 +51,15 @@ public class HighLowCardGame {
         System.out.println("Welcome to the Hi-Lo Card Game!");
         do {
             System.out.println("How much would you like to bet?");
-            handler.makeStake(UserInterface.getUserInputDouble());
+            double amount = UserInterface.getUserInputDouble();
+
+            while (!player.checkBet(amount)){
+                System.out.println("You don't have enough money to bet that! Your current balance is " + player.getBalanceAsString());
+                System.out.println("How much would you like to bet?");
+                amount = UserInterface.getUserInputDouble();
+            }
+
+            handler.makeStake(amount);
             Card cardRevealed = dealer.deal();
             Card cardHidden = dealer.deal();
 

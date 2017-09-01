@@ -20,7 +20,7 @@ public class HighLowDiceGame extends DiceGame {
 		this.player = player;
 	}
 
-	// TEST METHOD
+//	 TEST METHOD
 //	public static void main(String[] arg) {
 //		Player p = new Player("bob", 1000);
 //		HighLowDiceGame.playGameStatic(p);

@@ -20,6 +20,10 @@ public class UserInterface {
 
 		return output;
 	}
+	
+	public static double stripOtherCharsFromExpectedNumericString(){
+		return 0.0;
+	}
 
 	public static int getUserInput() {
 
@@ -36,7 +40,7 @@ public class UserInterface {
 		}
 
 		sc.nextLine();
-		// sc.close();
+
 		return output;
 	}
 

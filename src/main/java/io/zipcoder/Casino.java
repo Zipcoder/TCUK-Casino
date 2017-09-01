@@ -4,18 +4,33 @@ import io.zipcoder.Games.BlackjackGame;
 import io.zipcoder.Games.HighLowCardGame;
 import io.zipcoder.Games.HighLowDiceGame;
 
+import java.io.*;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Casino {
-	private static List<Player> players = new ArrayList<Player>();
+	private List<Player> players;
 
-	public static void main(String[] args){
-		start();
+	public Casino(ArrayList<Player> players){
+		this.players = players;
 	}
 
-	public static void start(){
+	public static void main(String[] args){
+		Casino casino = new Casino(new ArrayList<Player>());
+		casino.start();
+	}
+
+	public void start(){
 		Player player = null;
+
+		try {
+			getPlayers();
+		} catch (IOException e){
+			players = new ArrayList<Player>();
+		}
+
+
 		System.out.println("Welcome to the casino! Do you have an account? Please type Yes or No.");
 		String account = UserInterface.getUserInputString();
 		while (!account.equalsIgnoreCase("Yes") && !account.equalsIgnoreCase("No")){
@@ -27,12 +42,23 @@ public class Casino {
 			System.out.println("What is your username?");
 			String name = UserInterface.getUserInputString();
 			player = checkAccount(name);
-			if (player == null){
-				System.out.println("That account does not exist! Please make a new account.");
-				player = createAccount();
+			while (player == null){
+				System.out.println("That account does not exist!");
+				int choice = UserInterface.getUserInput("Would you like to:\n1: Try again?\n2: Create a new account?");
+				switch (choice) {
+					case 1:
+						name = UserInterface.getUserInputString("Please enter your username.");
+						player = checkAccount(name);
+						break;
+					case 2:
+						player = createAccount();
+						players.add(player);
+						break;
+				}
 			}
 		} else if (account.equalsIgnoreCase("No")) {
 			player = createAccount();
+			players.add(player);
 		}
 
 		String anotherGame = "Yes";
@@ -46,9 +72,14 @@ public class Casino {
 			}
 		}
 		System.out.println("Thank you for playing! See you next time.");
+		try {
+			savePlayers();
+		} catch (IOException e){
+			System.out.println(e);
+		}
 	}
 
-	private static Player createAccount(){
+	private Player createAccount(){
 		System.out.println("Please enter a username:");
 		String name = UserInterface.getUserInputString();
 		for (Player player1 : players){
@@ -68,7 +99,7 @@ public class Casino {
 		return new Player(name, balance);
 	}
 
-	private static Player checkAccount(String name){
+	private Player checkAccount(String name){
 		for (Player player1 : players){
 			if (player1.getName().equals(name)){
 				return player1;
@@ -77,7 +108,7 @@ public class Casino {
 		return null;
 	}
 
-	private static void chooseGame(Player player){
+	private void chooseGame(Player player){
 		System.out.println("What game would you like to play?\nPlease choose from:\n" +
 				"1: Blackjack\n" +
 				"2: Hi-Lo Card Game\n" +
@@ -104,5 +135,44 @@ public class Casino {
 				HighLowDiceGame.playGameStatic(player);
 		}
 	}
-}
 
+	public void savePlayers() throws IOException {
+		File file = new File(System.getProperty("user.home") + File.separator + "Documents" + File.separator + "players.txt");
+
+		try {
+			file.createNewFile();
+		} catch (Exception e){
+			System.out.println(e);
+		}
+
+		FileOutputStream out = new FileOutputStream(file);
+		StringBuilder sb = new StringBuilder();
+		for (Player p : players) {
+			sb.append(p.getName() + "," + p.getBalance() + System.lineSeparator());
+		}
+
+		String output = sb.toString();
+		byte[] contentInBytes = output.getBytes();
+		try {
+			out.write(contentInBytes);
+			out.flush();
+			out.close();
+		} catch (Exception e){
+			System.out.println(e);
+		}
+	}
+
+	public void getPlayers() throws IOException {
+		File file = new File(System.getProperty("user.home") + File.separator + "Documents"  + File.separator + "players.txt");
+
+		FileReader fileReader = new FileReader(file);
+		BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+		String currentLine;
+
+		while ((currentLine = bufferedReader.readLine()) != null){
+			String[] words = currentLine.split(",");
+			players.add(new Player(words[0], Double.parseDouble(words[1])));
+		}
+	}
+}

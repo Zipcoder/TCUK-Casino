@@ -44,12 +44,14 @@ public class Casino {
 					case 2:
 						player = createAccount();
 						players.add(player);
+						UserInterface.assignPlayer(player);
 						break;
 				}
 			}
 		} else if (account.equalsIgnoreCase("No")) {
 			player = createAccount();
 			players.add(player);
+			UserInterface.assignPlayer(player);
 		}
 
 		String anotherGame = "Yes";

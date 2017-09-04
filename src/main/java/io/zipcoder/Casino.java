@@ -5,7 +5,6 @@ import io.zipcoder.Games.HighLowCardGame;
 import io.zipcoder.Games.HighLowDiceGame;
 
 import java.io.*;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +16,7 @@ public class Casino {
 	}
 
 	public static void main(String[] args){
-		Casino casino = new Casino(new ArrayList<Player>());
+		Casino casino = new Casino(new ArrayList<>());
 		casino.start();
 	}
 
@@ -27,24 +26,16 @@ public class Casino {
 		try {
 			getPlayers();
 		} catch (IOException e){
-			players = new ArrayList<Player>();
+			players = new ArrayList<>();
 		}
 
-
-		System.out.println("Welcome to the casino! Do you have an account? Please type Yes or No.");
-		String account = UserInterface.getUserInputString();
-		while (!account.equalsIgnoreCase("Yes") && !account.equalsIgnoreCase("No")){
-			System.out.println("That is not a valid input. Please say Yes or No.");
-			account = UserInterface.getUserInputString();
-		}
+		String account = getYesOrNo("Welcome to the casino! Do you have an account? Please type Yes or No.");
 
 		if (account.equalsIgnoreCase("Yes")){
-			System.out.println("What is your username?");
-			String name = UserInterface.getUserInputString();
+			String name = UserInterface.getUserInputString("What is your username?");
 			player = checkAccount(name);
 			while (player == null){
-				System.out.println("That account does not exist!");
-				int choice = UserInterface.getUserInput("Would you like to:\n1: Try again?\n2: Create a new account?");
+				int choice = UserInterface.getUserInput("That account does not exist! Would you like to:\n1: Try again?\n2: Create a new account?");
 				switch (choice) {
 					case 1:
 						name = UserInterface.getUserInputString("Please enter your username.");
@@ -64,12 +55,7 @@ public class Casino {
 		String anotherGame = "Yes";
 		while (anotherGame.equalsIgnoreCase("Yes")){
 			chooseGame(player);
-			System.out.println("Do you want to play a different game? Please say Yes or No.");
-			anotherGame = UserInterface.getUserInputString();
-			while (!anotherGame.equalsIgnoreCase("Yes") && !anotherGame.equalsIgnoreCase("No")){
-				System.out.println("That is not a valid input. Please say Yes or No.");
-				anotherGame = UserInterface.getUserInputString();
-			}
+			anotherGame = getYesOrNo("Do you want to play a different game? Please say Yes or No.");
 		}
 		System.out.println("Thank you for playing! See you next time.");
 		try {
@@ -80,20 +66,16 @@ public class Casino {
 	}
 
 	private Player createAccount(){
-		System.out.println("Please enter a username:");
-		String name = UserInterface.getUserInputString();
+		String name = UserInterface.getUserInputString("Please enter a username:");
 		for (Player player1 : players){
 			while (player1.getName().equals(name)){
-				System.out.println("That username has already been taken. Please enter another:");
-				name = UserInterface.getUserInputString();
+				name = UserInterface.getUserInputString("That username has already been taken. Please enter another:");
 				break;
 			}
 		}
-		System.out.println("How much money do you want to play with?");
-		double balance = UserInterface.getUserInputDouble();
+		double balance = UserInterface.getUserInputDouble("How much money do you want to play with?");
 		while (balance < 0){
-			System.out.println("That is not a valid balance, can't add less than zero");
-			balance = UserInterface.getUserInputDouble();
+			balance = UserInterface.getUserInputDouble("That is not a valid balance, can't add less than zero");
 		}
 
 		return new Player(name, balance);
@@ -109,18 +91,15 @@ public class Casino {
 	}
 
 	private void chooseGame(Player player){
-		System.out.println("What game would you like to play?\nPlease choose from:\n" +
+		int choice = UserInterface.getUserInput("What game would you like to play?\nPlease choose from:\n" +
 				"1: Blackjack\n" +
 				"2: Hi-Lo Card Game\n" +
 				"3: Hi-Lo Dice Game");
-		int choice = UserInterface.getUserInput();
 		while (choice != 1 && choice != 2 && choice != 3){
-			System.out.println("That is not a valid input, please try again. The options are:\n" +
+			choice = UserInterface.getUserInput("That is not a valid input, please try again. The options are:\n" +
 					"1: Blackjack\n" +
 					"2: Hi-Lo Card Game\n" +
 					"3: Hi-Lo Dice Game");
-
-			choice = UserInterface.getUserInput();
 		}
 
 		switch (choice){
@@ -175,5 +154,13 @@ public class Casino {
 			String[] words = currentLine.split(",");
 			players.add(new Player(words[0], Double.parseDouble(words[1])));
 		}
+	}
+
+	public String getYesOrNo(String question) {
+		String answer = UserInterface.getUserInputString(question);
+		while (!answer.equalsIgnoreCase("Yes") && !answer.equalsIgnoreCase("No")) {
+			answer = UserInterface.getUserInputString("That is not a valid input. Please say Yes or No.");
+		}
+		return answer;
 	}
 }

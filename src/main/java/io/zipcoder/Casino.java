@@ -125,11 +125,12 @@ public class Casino {
 
 		switch (choice){
 			case 1:
-				BlackjackGame game = new BlackjackGame();
-				game.playGame(player);
+				BlackjackGame blackjackGame = new BlackjackGame();
+				blackjackGame.playGame(player);
 				break;
 			case 2:
-				HighLowCardGame.playGame(player);
+				HighLowCardGame highLowCardGame = new HighLowCardGame();
+				highLowCardGame.playGame(player);
 				break;
 			case 3:
 				HighLowDiceGame.playGameStatic(player);

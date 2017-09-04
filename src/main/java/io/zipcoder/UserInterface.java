@@ -264,10 +264,8 @@ public class UserInterface {
 
 	private static void help(String inputString) {
 		String message = "\n--- help menu ---\n";
-		message += "Please select a help feature:\n" 
-				+ " - check my balance and get transaction history\n"
-				+ " - check the game rules\n" 
-				+ " - leave the help interface";
+		message += "Please select a help feature:\n" + " - check my balance and get transaction history\n"
+				+ " - check the game rules\n" + " - leave the help interface";
 
 		sendUpwardsToUser(message);
 		String userInput = getStringLogic();
@@ -287,21 +285,23 @@ public class UserInterface {
 			sendUpwardsToUser("This feature is unavailble without an active user in the casino.");
 			return;
 		}
-		
+
 		String message = "\n--- balance help menu ---\n";
-		message += "Please select a feature:\n" 
-				+ " - check my balance\n"
-				+ " - check my transaction history\n"
+		message += "Please select a feature:\n" + " - check my balance\n" + " - check my transaction history\n"
 				+ " - deposit money into my accont";
 
 		sendUpwardsToUser(message);
 		String userInput = getStringLogic();
 
 		if (checkIfInputHas(userInput, "balance")) {
-			sendUpwardsToUser(getPlayerName()+ ", your balance is: " + player.getBalanceAsString());
+			sendUpwardsToUser(getPlayerName() + ", your balance is: " + player.getBalanceAsString());
 		} else if (checkIfInputHas(userInput, "transaction")) {
-			sendUpwardsToUser(player.getLog().printTransactionLog(player.getLog().getLog().size()));
-		} else if (checkIfInputHas(userInput, "deposit")){
+			if (player.getLog().getLog().size() == 0) {
+				sendUpwardsToUser("no transactions have been made");
+			} else {
+				sendUpwardsToUser(player.getLog().printTransactionLog(player.getLog().getLog().size()));
+			}
+		} else if (checkIfInputHas(userInput, "deposit")) {
 			player.increaseBalance(getUserInputDoubleTo2DP("How much do you want to deposit?", true, true));
 		}
 

@@ -96,7 +96,14 @@ public class Player {
 	public String getCurrentGame() {
 		return currentGame;
 	}
-	
+		
+	/**
+	 * @return the log
+	 */
+	public TransactionLog getLog() {
+		return log;
+	}
+
 	public String getBalanceAsString(){
 		return String.format("£%.2f", getBalance());
 	}

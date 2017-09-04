@@ -26,7 +26,7 @@ public class Casino {
 		try {
 			getPlayers();
 		} catch (IOException e){
-			players = new ArrayList<>();
+			players = new ArrayList<Player>();
 		}
 
 		String account = getYesOrNo("Welcome to the casino! Do you have an account? Please type Yes or No.");

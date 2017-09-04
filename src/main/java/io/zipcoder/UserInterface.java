@@ -148,10 +148,10 @@ public class UserInterface {
 	 */
 	public static Double getUserInputDoubleTo2DP(String userReadableString, boolean printWarningMessage,
 			boolean printCurrencyFlag) {
-		
+
 		commonInit(userReadableString);
 		Double gotDouble = getDoubleLogic();
-		
+
 		gotDouble = Math.round(gotDouble * 100.0) / 100.0;
 		if (printWarningMessage) {
 			sendUpwardsToUser(String.format(
@@ -179,7 +179,7 @@ public class UserInterface {
 	 * @return the string "Welcome to the Casino!"
 	 */
 	public String welcome() {
-		return "Welcome to the Casino!";
+		return "Welcome to the Casino!\nFor help whilst playing a game, just ask for \"help\"!";
 	}
 
 	/**
@@ -263,23 +263,52 @@ public class UserInterface {
 	 */
 
 	private static void help(String inputString) {
-		sendUpwardsToUser("help interface triggered");
-		// TODO
+		String message = "\n--- help menu ---\n";
+		message += "Please select a help feature:\n" + " - check my balance and get transaction history\n"
+				+ " - check the game rules\n" + " - leave the help interface";
+
+		sendUpwardsToUser(message);
+		String userInput = getStringLogic();
+
+		if (checkIfInputHas(userInput, "rules") || checkIfInputHas(userInput, "game rules")) {
+			rulesHelp(userInput);
+		} else if (checkIfInputHas(userInput, "balance")) {
+			balanceHelp(userInput);
+		} else {
+			return;
+		}
+
 	}
 
 	private static void balanceHelp(String inputString) {
-		sendUpwardsToUser("balance help interface triggered");
 		if (!isPlayerAssigned()) {
 			sendUpwardsToUser("This feature is unavailble without an active user in the casino.");
 			return;
 		}
-		// TODO
+
+		String message = "\n--- balance help menu ---\n";
+		message += "Please select a feature:\n" + " - check my balance\n" + " - check my transaction history\n"
+				+ " - deposit money into my accont";
+
+		sendUpwardsToUser(message);
+		String userInput = getStringLogic();
+
+		if (checkIfInputHas(userInput, "balance")) {
+			sendUpwardsToUser(getPlayerName() + ", your balance is: " + player.getBalanceAsString());
+		} else if (checkIfInputHas(userInput, "transaction")) {
+			if (player.getLog().getLog().size() == 0) {
+				sendUpwardsToUser("no transactions have been made");
+			} else {
+				sendUpwardsToUser(player.getLog().printTransactionLog(player.getLog().getLog().size()));
+			}
+		} else if (checkIfInputHas(userInput, "deposit")) {
+			player.increaseBalance(getUserInputDoubleTo2DP("How much do you want to deposit?", true, true));
+		}
 
 	}
 
 	private static void rulesHelp(String inputString) {
-		sendUpwardsToUser("rules help interface triggered");
-		// TODO
+		sendUpwardsToUser("Pleas ask an attendant for the current game rules :) ");
 	}
 
 	/**
@@ -298,7 +327,7 @@ public class UserInterface {
 			help(userInputString);
 		}
 
-		sendUpwardsToUser("--- exiting help ---\n"+originalUserInput);
+		sendUpwardsToUser("--- exiting help ---\n" + originalUserInput);
 		return getStringLogic();
 	}
 
@@ -413,6 +442,19 @@ public class UserInterface {
 	 */
 	private static int getIntLogic() {
 		return Integer.parseInt("" + Math.round(getDoubleLogic()));
+	}
+
+	/**
+	 * get the current name of the player, or return an empty string.
+	 * 
+	 * @return
+	 */
+	private static String getPlayerName() {
+		if (isPlayerAssigned()) {
+			return player.getName();
+		} else {
+			return "";
+		}
 	}
 
 }

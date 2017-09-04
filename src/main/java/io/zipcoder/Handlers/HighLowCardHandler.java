@@ -18,7 +18,7 @@ public class HighLowCardHandler extends CardHandler {
 	}
 
 	public void cardHigher(){
-		player.increaseBalance(pot);
+		player.increaseBalance(stake);
 	}
 
 	public void cardLower(){

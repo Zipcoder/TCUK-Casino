@@ -16,7 +16,7 @@ public class Casino {
 	}
 
 	public static void main(String[] args){
-		Casino casino = new Casino(new ArrayList<>());
+		Casino casino = new Casino(new ArrayList<Player>());
 		casino.start();
 	}
 
@@ -69,6 +69,9 @@ public class Casino {
 
 	private Player createAccount(){
 		String name = UserInterface.getUserInputString("Please enter a username:");
+		while (name.equals("")){
+			name = UserInterface.getUserInputString("Username cannot be empty! Please enter a name.");
+		}
 		for (Player player1 : players){
 			while (player1.getName().equals(name)){
 				name = UserInterface.getUserInputString("That username has already been taken. Please enter another:");

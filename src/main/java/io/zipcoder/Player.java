@@ -32,7 +32,7 @@ public class Player {
 	}
 
 	public boolean increaseBalance(double amount) {
-		if (amount > 0) {
+		if (amount >= 0) {
 			balance += amount;
 			// update Transaction log
 			this.log.updateTransaction(new Transaction(this, amount));
@@ -45,8 +45,8 @@ public class Player {
 
 	public boolean reduceBalance(double amount) {
 
-		if ((balance - amount) > 0) {
-			if (amount > 0) {
+		if ((balance - amount) >= 0) {
+			if (amount >= 0) {
 				balance -= amount;
 				// update Transaction log
 				this.log.updateTransaction(new Transaction(this, amount));

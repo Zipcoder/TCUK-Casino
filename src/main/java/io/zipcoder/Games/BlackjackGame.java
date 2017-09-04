@@ -75,16 +75,55 @@ public class BlackjackGame extends CardGame {
 	}
 	
 	public double askForStake(Player player){
-		System.out.println("How much would you like to bet?");
-		double amount = UserInterface.getUserInputDouble();
+		double amount = UserInterface.getUserInputDouble("How much would you like to bet?");
 				
 		// Bet At The Beginning Of The Game
 		while (!player.checkBet(amount)){
 			System.out.println("You don't have enough money to bet that! Your current balance is " + player.getBalanceAsString());
-			System.out.println("How much would you like to bet?");
-			amount = UserInterface.getUserInputDouble();
+			amount = UserInterface.getUserInputDouble("How much would you like to bet?");
 		}
 		return amount;
+	}
+	
+	public void firstHandFail(Player player, BlackjackHandler blackjackHandler) {
+		System.out.println("Dealer BlackJack! You Lose. Game Over.");
+		blackjackHandler.hitFail();;
+		System.out.println(player.getName() + ": " + player.getBalance() + ". Try Again! You Will Win Next Time!");
+	}
+
+	public void firstHandWin(Player player, BlackjackHandler blackjackHandler) {
+		System.out.println("BlackJack! You Win!!!");
+		blackjackHandler.hitSuccess();
+		System.out.println(player.getName() + ": " + player.getBalance() + ". Well Done! Play More!");
+	}
+
+	public void firstHandTie(Player player) {
+		System.out.println("This is a tie. Game Over.");
+		System.out.println(player.getName() + ": " + player.getBalance() + ". See You Next Time!");
+	}
+
+	public String askUserDecision() {
+		String userDecision = UserInterface.getUserInputString("Do you want to hit? Please answer Y/N");
+		return userDecision;
+	}
+
+	public void win(Player player, BlackjackHandler blackjackHandler) {
+		showResult(blackjackHandler.getHand());
+		System.out.println("You Win. Game Over.");
+		blackjackHandler.hitSuccess();
+		System.out.println(player.getName() + ": " + player.getBalance() + ". Well Done! Play More!");
+	}
+
+	public void tie(Player player, BlackjackHandler blackjackHandler) {
+		showResult(blackjackHandler.getHand());
+		firstHandTie(player);
+	}
+
+	public void handValueBiggerThan21(Player player, BlackjackHandler blackjackHandler) {
+		showResult(blackjackHandler.getHand());
+		System.out.println("You Lose. Game Over.");
+		blackjackHandler.hitFail();
+		System.out.println(player.getName() + ": " + player.getBalance() + ". Try Again! You Will Win Next Time!");
 	}
 	
 	public void dealFirstHand(BlackjackHandler blackjackHandler){
@@ -159,48 +198,5 @@ public class BlackjackGame extends CardGame {
 		}
 		
 	}
-
-	public void firstHandFail(Player player, BlackjackHandler blackjackHandler) {
-		System.out.println("Dealer BlackJack! You Lose. Game Over.");
-		blackjackHandler.hitFail();;
-		System.out.println(player.getName() + ": " + player.getBalance() + ". Try Again! You Will Win Next Time!");
-	}
-
-	public void firstHandWin(Player player, BlackjackHandler blackjackHandler) {
-		System.out.println("BlackJack! You Win!!!");
-		blackjackHandler.hitSuccess();
-		System.out.println(player.getName() + ": " + player.getBalance() + ". Well Done! Play More!");
-	}
-
-	public void firstHandTie(Player player) {
-		System.out.println("This is a tie. Game Over.");
-		System.out.println(player.getName() + ": " + player.getBalance() + ". See You Next Time!");
-	}
-
-	public String askUserDecision() {
-		System.out.println("Do you want to hit? Please answer Y/N");
-		String userDecision = UserInterface.getUserInputString();
-		return userDecision;
-	}
-
-	public void win(Player player, BlackjackHandler blackjackHandler) {
-		showResult(blackjackHandler.getHand());
-		System.out.println("You Win. Game Over.");
-		blackjackHandler.hitSuccess();
-		System.out.println(player.getName() + ": " + player.getBalance() + ". Well Done! Play More!");
-	}
-
-	public void tie(Player player, BlackjackHandler blackjackHandler) {
-		showResult(blackjackHandler.getHand());
-		firstHandTie(player);
-	}
-
-	public void handValueBiggerThan21(Player player, BlackjackHandler blackjackHandler) {
-		showResult(blackjackHandler.getHand());
-		System.out.println("You Lose. Game Over.");
-		blackjackHandler.hitFail();
-		System.out.println(player.getName() + ": " + player.getBalance() + ". Try Again! You Will Win Next Time!");
-	}
-	
 		
 }

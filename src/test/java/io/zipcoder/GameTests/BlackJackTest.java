@@ -3,11 +3,13 @@ package io.zipcoder.GameTests;
 import org.junit.Assert;
 import org.junit.Test;
 
+import io.zipcoder.Player;
 import io.zipcoder.Cards.Card;
 import io.zipcoder.Cards.Hand;
 import io.zipcoder.Cards.Suit;
 import io.zipcoder.Cards.Value;
 import io.zipcoder.Games.BlackjackGame;
+import io.zipcoder.Handlers.BlackjackHandler;
 
 public class BlackJackTest {
 	
@@ -103,6 +105,22 @@ public class BlackJackTest {
 		//: When
 		BlackjackGame.hit(hand);
 		int actual = hand.getNumberOfCards();
+		
+		//: Then
+		Assert.assertEquals(expected, actual);				
+	}
+	
+	@Test
+	public void dealFirstHandTest(){
+		//: Given
+		Player player = new Player("Cici", 1000);
+		BlackjackHandler blackjackHandler = new BlackjackHandler(player);
+		BlackjackGame newGame = new BlackjackGame();
+		int expected = 2;
+		
+		//: When
+		newGame.dealFirstHand(blackjackHandler);
+		int actual = blackjackHandler.getHand().getNumberOfCards();
 		
 		//: Then
 		Assert.assertEquals(expected, actual);				

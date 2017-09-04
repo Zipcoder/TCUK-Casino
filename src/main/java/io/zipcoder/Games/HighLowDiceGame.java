@@ -34,7 +34,7 @@ public class HighLowDiceGame extends DiceGame {
 	public static void playGameStatic(Player player) {
 
 		boolean continueGame = true;
-		int bettingPool = 0;
+		double bettingPool = 0;
 		HighLowDiceHandler diceHandler = new HighLowDiceHandler(player);
 		int numberOfDiceToPlayWith;
 		int currentDiceRoll = 0;

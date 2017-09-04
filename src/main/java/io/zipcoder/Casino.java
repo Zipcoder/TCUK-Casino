@@ -16,7 +16,7 @@ public class Casino {
 	}
 
 	public static void main(String[] args){
-		Casino casino = new Casino(new ArrayList<>());
+		Casino casino = new Casino(new ArrayList<Player>());
 		casino.start();
 	}
 

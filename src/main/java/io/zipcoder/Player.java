@@ -38,7 +38,7 @@ public class Player {
 			this.log.updateTransaction(new Transaction(this, amount));
 			return true;
 		} else {
-			System.out.println("Cannot increase by zero or less");
+			UserInterface.sendUpwardsToUser("Cannot increase by zero or less");
 			return false;
 		}
 	}
@@ -52,11 +52,11 @@ public class Player {
 				this.log.updateTransaction(new Transaction(this, amount));
 				return true;
 			}
-			System.out.println("Cannot reduce by zero or less");
+			UserInterface.sendUpwardsToUser("Cannot reduce by zero or less");
 			return false;
 
 		} else {
-			System.out.println("Not enough money");
+			UserInterface.sendUpwardsToUser("Not enough money");
 			return false;
 		}
 	}

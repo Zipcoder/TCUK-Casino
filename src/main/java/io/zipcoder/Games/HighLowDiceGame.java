@@ -39,7 +39,7 @@ public class HighLowDiceGame extends DiceGame {
 		int numberOfDiceToPlayWith;
 		int currentDiceRoll = 0;
 
-		System.out.println("Welcome to the higher and lower dice game!");
+		UserInterface.sendUpwardsToUser("Welcome to the higher and lower dice game!");
 
 		while (continueGame) {
 
@@ -51,7 +51,7 @@ public class HighLowDiceGame extends DiceGame {
 
 			// Tell player what the number is then let the player bet if they
 			// want to: bet if the next roll will be higher or lower
-			System.out.println("The dice roll added up to: " + currentDiceRoll
+			UserInterface.sendUpwardsToUser("The dice roll added up to: " + currentDiceRoll
 					+ " do you want to bet whether the next dice roll will be higher or lower?");
 
 			// check and get the user input
@@ -71,18 +71,18 @@ public class HighLowDiceGame extends DiceGame {
 			diceHandler.setDiceValue(numberOfDiceToPlayWith);
 			int newDiceRoll = diceHandler.getDiceValue();
 
-			System.out.println("The new dice value is: " + newDiceRoll);
+			UserInterface.sendUpwardsToUser("The new dice value is: " + newDiceRoll);
 
 			// perform check
-			// if passes, give money to the player -- have system.out.println
+			// if passes, give money to the player -- have UserInterface.sendUpwardsToUser
 			// informative information
 
 			winLoseLogic(bettingPool, diceHandler, currentDiceRoll, userInput, newDiceRoll);
 
-			System.out.println("Your new balance is: " + player.getBalance());
+			UserInterface.sendUpwardsToUser("Your new balance is: " + player.getBalance());
 
 			bettingPool = 0;
-			System.out.println("\nDo you want to continue the game?");
+			UserInterface.sendUpwardsToUser("\nDo you want to continue the game?");
 			continueGame = continueGame(continueGame);
 		}
 
@@ -90,7 +90,7 @@ public class HighLowDiceGame extends DiceGame {
 
 	}
 
-	private static int getValidBet(int bettingPool, HighLowDiceHandler diceHandler) {
+	private static double getValidBet(double bettingPool, HighLowDiceHandler diceHandler) {
 		double bettableAmount;
 		boolean invalidBet = true;
 		while (invalidBet) {
@@ -114,7 +114,7 @@ public class HighLowDiceGame extends DiceGame {
 				return userInput;
 
 			} else {
-				System.out.println(
+				UserInterface.sendUpwardsToUser(
 						"Sorry, I didn't understand that, can you say if the next dice will be higher or lower?");
 
 			}
@@ -129,48 +129,48 @@ public class HighLowDiceGame extends DiceGame {
 		while (continueCondition) {
 			userInput = UserInterface.getUserInputString();
 			if ((checkIfInputHas(userInput, "n")) || (checkIfInputHas(userInput, "no"))) {
-				System.out.println("See you next time at higher or lower dice game!");
+				UserInterface.sendUpwardsToUser("See you next time at higher or lower dice game!");
 				continueCondition = false;
 				continueGame = false;
 			} else if ((checkIfInputHas(userInput, "y")) || (checkIfInputHas(userInput, "yes"))) {
-				System.out.println("Let's go again!");
+				UserInterface.sendUpwardsToUser("Let's go again!");
 				continueCondition = false;
 			} else {
-				System.out.println("Sorry, could you repeat that? (yes/no)");
+				UserInterface.sendUpwardsToUser("Sorry, could you repeat that? (yes/no)");
 			}
 		}
 		return continueGame;
 	}
 
-	private static void winLoseLogic(int bettingPool, HighLowDiceHandler diceHandler, int currentDiceRoll,
+	private static void winLoseLogic(double bettingPool, HighLowDiceHandler diceHandler, int currentDiceRoll,
 			String userInput, int newDiceRoll) {
 		// winning logic
 		if (winLogic(currentDiceRoll, userInput, newDiceRoll)) {
 
 			// add money to player
 			diceHandler.giveMoney(bettingPool * 2);
-			System.out.println("You Win!");
+			UserInterface.sendUpwardsToUser("You Win!");
 
 			// losing logic
 		} else if (loseLogic(currentDiceRoll, userInput, newDiceRoll)) {
 
 			// don't give money to player.
-			System.out.println("Bad luck!");
+			UserInterface.sendUpwardsToUser("Bad luck!");
 
 			// tie logic
 		} else {
 			diceHandler.giveMoney(bettingPool);
-			System.out.println("Wow, that's cheeky");
+			UserInterface.sendUpwardsToUser("Wow, that's cheeky");
 		}
 	}
 
 	private static int numDice() {
 		int numberOfDiceToPlayWith;
 		// select number of dice to play with
-		System.out.println("How many dice do you want to play with? Please type a number:");
+		UserInterface.sendUpwardsToUser("How many dice do you want to play with? Please type a number:");
 		numberOfDiceToPlayWith = UserInterface.getUserInput();
 		while (numberOfDiceToPlayWith < 1 || numberOfDiceToPlayWith > 10) {
-			System.out.println("That is not a valid number, please enter a number between 1 and 10");
+			UserInterface.sendUpwardsToUser("That is not a valid number, please enter a number between 1 and 10");
 			numberOfDiceToPlayWith = UserInterface.getUserInput();
 		}
 		return numberOfDiceToPlayWith;
@@ -213,7 +213,7 @@ public class HighLowDiceGame extends DiceGame {
 		double betAmount = 0;
 
 		while (condition) {
-			System.out.println("How much money do you want to bet?");
+			UserInterface.sendUpwardsToUser("How much money do you want to bet?");
 			betAmount = UserInterface.getUserInputDouble();
 
 			condition = checkBetAmount(diceHandler, betAmount);
@@ -231,7 +231,7 @@ public class HighLowDiceGame extends DiceGame {
 	public static boolean checkBetAmount(HighLowDiceHandler diceHandler, double betAmount) {
 		boolean condition;
 		if (!diceHandler.getPlayer().checkBet(betAmount)) {
-			System.out.println("You cannot bet that! Please enter a valid bet:");
+			UserInterface.sendUpwardsToUser("You cannot bet that! Please enter a valid bet:");
 			condition = true;
 		} else {
 			condition = false;

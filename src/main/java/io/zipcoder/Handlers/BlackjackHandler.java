@@ -2,6 +2,7 @@ package io.zipcoder.Handlers;
 
 import io.zipcoder.Bettable;
 import io.zipcoder.Player;
+import io.zipcoder.UserInterface;
 
 public class BlackjackHandler extends CardHandler {
     private double pot;
@@ -33,7 +34,7 @@ public class BlackjackHandler extends CardHandler {
             pot += amount;
             return true;
         } else {
-            System.out.println("Amount cannot be less than 0");
+            UserInterface.sendUpwardsToUser("Amount cannot be less than 0");
             return false;
         }
 

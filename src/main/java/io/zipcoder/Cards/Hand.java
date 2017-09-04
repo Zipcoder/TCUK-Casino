@@ -3,6 +3,8 @@ package io.zipcoder.Cards;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.zipcoder.UserInterface;
+
 /**
  * Created by W550952 on 30/08/2017.
  */
@@ -25,10 +27,10 @@ public class Hand {
             numberOfCards++;
             return true;
         } else if (card == null){
-            System.out.println("That card is null");
+            UserInterface.sendUpwardsToUser("That card is null");
             return false;
         } else {
-            System.out.println("That card is already in the hand");
+            UserInterface.sendUpwardsToUser("That card is already in the hand");
             return false;
         }
     }

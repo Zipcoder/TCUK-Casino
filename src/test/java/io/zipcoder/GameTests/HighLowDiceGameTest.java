@@ -105,7 +105,7 @@ public class HighLowDiceGameTest {
 		
 		// :Then
 		
-		Assert.assertTrue(result);
+		Assert.assertFalse(result);
 	}
 	
 	

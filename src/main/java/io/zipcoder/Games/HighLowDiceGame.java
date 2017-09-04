@@ -90,7 +90,7 @@ public class HighLowDiceGame extends DiceGame {
 
 	}
 
-	private static int getValidBet(int bettingPool, HighLowDiceHandler diceHandler) {
+	private static double getValidBet(double bettingPool, HighLowDiceHandler diceHandler) {
 		double bettableAmount;
 		boolean invalidBet = true;
 		while (invalidBet) {
@@ -142,7 +142,7 @@ public class HighLowDiceGame extends DiceGame {
 		return continueGame;
 	}
 
-	private static void winLoseLogic(int bettingPool, HighLowDiceHandler diceHandler, int currentDiceRoll,
+	private static void winLoseLogic(double bettingPool, HighLowDiceHandler diceHandler, int currentDiceRoll,
 			String userInput, int newDiceRoll) {
 		// winning logic
 		if (winLogic(currentDiceRoll, userInput, newDiceRoll)) {
@@ -232,9 +232,9 @@ public class HighLowDiceGame extends DiceGame {
 		boolean condition;
 		if (!diceHandler.getPlayer().checkBet(betAmount)) {
 			System.out.println("You cannot bet that! Please enter a valid bet:");
-			condition = true;
-		} else {
 			condition = false;
+		} else {
+			condition = true;
 		}
 		return condition;
 	}

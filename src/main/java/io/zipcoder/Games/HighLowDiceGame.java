@@ -216,7 +216,7 @@ public class HighLowDiceGame extends DiceGame {
 			System.out.println("How much money do you want to bet?");
 			betAmount = UserInterface.getUserInputDouble();
 
-			condition = checkBetAmount(diceHandler, betAmount);
+			condition = !checkBetAmount(diceHandler, betAmount);
 		}
 
 		return (double) betAmount;

@@ -63,7 +63,7 @@ public class HighLowCardGame {
             } else {
                 System.out.println("The values were the same, you tied.");
             }
-
+            UserInterface.sendUpwardsToUser("Your balance is: " + handler.getPlayer().getBalance());
             again =  playAgain();
         } while (again.equalsIgnoreCase("Yes"));
 
@@ -126,7 +126,7 @@ public class HighLowCardGame {
     }
 
     public String playAgain(){
-        String again = UserInterface.getUserInputString("Your balance is: " + handler.getPlayer().getBalance() + "Do you want to play again? Please type Yes or No.");
+        String again = UserInterface.getUserInputString("Do you want to play again? Please type Yes or No.");
         while (!again.equalsIgnoreCase("Yes") && !again.equalsIgnoreCase("No")){
             again = UserInterface.getUserInputString("That is not a valid input. Please say Yes or No.");
         }

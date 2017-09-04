@@ -1,13 +1,9 @@
 package io.zipcoder.Games;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-
-import io.zipcoder.Bettable;
 import io.zipcoder.CardDealer;
 import io.zipcoder.Player;
 import io.zipcoder.UserInterface;
-import io.zipcoder.Cards.Card;
 import io.zipcoder.Cards.Hand;
 import io.zipcoder.Cards.Value;
 import io.zipcoder.Handlers.BlackjackHandler;
@@ -60,13 +56,13 @@ public class BlackjackGame extends CardGame {
 	// Method To Show The Card
 	public static void showHand(Hand hand){
 		String output = hand.getHand().toString();
-		System.out.println(output + " " + computeHandValue(hand) + " points.");
+		UserInterface.sendUpwardsToUser(output + " " + computeHandValue(hand) + " points.");
 	}
 	
 	public void showResult(Hand hand){
-		System.out.println("Dealer's Cards:");
+		UserInterface.sendUpwardsToUser("Dealer's Cards:");
 		showHand(cardDealer.getHand());
-		System.out.println("Player's Cards:");
+		UserInterface.sendUpwardsToUser("Player's Cards:");
 		showHand(hand);
 	}
 	// Hit A Card
@@ -79,27 +75,27 @@ public class BlackjackGame extends CardGame {
 				
 		// Bet At The Beginning Of The Game
 		while (!player.checkBet(amount)){
-			System.out.println("You don't have enough money to bet that! Your current balance is " + player.getBalanceAsString());
+			UserInterface.sendUpwardsToUser("You don't have enough money to bet that! Your current balance is " + player.getBalanceAsString());
 			amount = UserInterface.getUserInputDouble("How much would you like to bet?");
 		}
 		return amount;
 	}
 	
 	public void firstHandFail(Player player, BlackjackHandler blackjackHandler) {
-		System.out.println("Dealer BlackJack! You Lose. Game Over.");
+		UserInterface.sendUpwardsToUser("Dealer BlackJack! You Lose. Game Over.");
 		blackjackHandler.hitFail();;
-		System.out.println(player.getName() + ": " + player.getBalance() + ". Try Again! You Will Win Next Time!");
+		UserInterface.sendUpwardsToUser(player.getName() + ": " + player.getBalance() + ". Try Again! You Will Win Next Time!");
 	}
 
 	public void firstHandWin(Player player, BlackjackHandler blackjackHandler) {
-		System.out.println("BlackJack! You Win!!!");
+		UserInterface.sendUpwardsToUser("BlackJack! You Win!!!");
 		blackjackHandler.hitSuccess();
-		System.out.println(player.getName() + ": " + player.getBalance() + ". Well Done! Play More!");
+		UserInterface.sendUpwardsToUser(player.getName() + ": " + player.getBalance() + ". Well Done! Play More!");
 	}
 
 	public void firstHandTie(Player player) {
-		System.out.println("This is a tie. Game Over.");
-		System.out.println(player.getName() + ": " + player.getBalance() + ". See You Next Time!");
+		UserInterface.sendUpwardsToUser("This is a tie. Game Over.");
+		UserInterface.sendUpwardsToUser(player.getName() + ": " + player.getBalance() + ". See You Next Time!");
 	}
 
 	public String askUserDecision() {
@@ -109,9 +105,9 @@ public class BlackjackGame extends CardGame {
 
 	public void win(Player player, BlackjackHandler blackjackHandler) {
 		showResult(blackjackHandler.getHand());
-		System.out.println("You Win. Game Over.");
+		UserInterface.sendUpwardsToUser("You Win. Game Over.");
 		blackjackHandler.hitSuccess();
-		System.out.println(player.getName() + ": " + player.getBalance() + ". Well Done! Play More!");
+		UserInterface.sendUpwardsToUser(player.getName() + ": " + player.getBalance() + ". Well Done! Play More!");
 	}
 
 	public void tie(Player player, BlackjackHandler blackjackHandler) {
@@ -121,9 +117,9 @@ public class BlackjackGame extends CardGame {
 
 	public void handValueBiggerThan21(Player player, BlackjackHandler blackjackHandler) {
 		showResult(blackjackHandler.getHand());
-		System.out.println("You Lose. Game Over.");
+		UserInterface.sendUpwardsToUser("You Lose. Game Over.");
 		blackjackHandler.hitFail();
-		System.out.println(player.getName() + ": " + player.getBalance() + ". Try Again! You Will Win Next Time!");
+		UserInterface.sendUpwardsToUser(player.getName() + ": " + player.getBalance() + ". Try Again! You Will Win Next Time!");
 	}
 	
 	public void dealFirstHand(BlackjackHandler blackjackHandler){
@@ -176,7 +172,7 @@ public class BlackjackGame extends CardGame {
 			}else if(userDecision.equalsIgnoreCase("N")){
 				break;
 			}else{
-				System.out.println("Please choose from Y and N");
+				UserInterface.sendUpwardsToUser("Please choose from Y and N");
 			}
 		}
 		
